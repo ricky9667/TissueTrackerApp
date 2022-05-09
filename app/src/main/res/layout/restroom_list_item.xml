@@ -6,12 +6,12 @@
     android:padding="6dp">
 
     <TextView
-        android:id="@+id/listItemTitle"
+        android:id="@+id/restroomListItemTitle"
         android:text="Title"
-        style="@style/listItemTitle" />
+        style="@style/restroomListItemTitle" />
 
     <TextView
-        android:id="@+id/listItemContent"
+        android:id="@+id/restroomListItemContent"
         android:text="Content"
-        style="@style/listItemContent" />
+        style="@style/restroomListItemContent" />
 </LinearLayout>
