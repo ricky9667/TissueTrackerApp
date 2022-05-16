@@ -34,7 +34,7 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
             // Get the position of the item that was clicked.
             int mPosition = getLayoutPosition();
 
-            Intent intent = new Intent(view.getContext(), DescriptionActivity.class);
+            Intent intent = new Intent(view.getContext(), ToiletActivity.class);
             String message = String.valueOf(mPosition);
             intent.putExtra("com.example.android.extra.MESSAGE", message);
             view.getContext().startActivity(intent);
