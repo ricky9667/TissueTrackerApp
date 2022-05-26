@@ -1,12 +1,10 @@
 package com.example.android;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.TextView;
 
 import com.example.android.models.Toilet;
 import com.example.android.models.ToiletState;
@@ -22,9 +20,6 @@ public class ToiletActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.toilet_activity);
-//        Intent intent = getIntent();
-//        int position = Integer.parseInt(intent.getStringExtra("com.example.android.extra.MESSAGE"));
-
 
         mToiletList.addLast(new Toilet("5fc04173", "科研 13-1", ToiletState.SUFFICIENT, 1.0f));
         mToiletList.addLast(new Toilet("a9e9ade6", "科研 13-2", ToiletState.INSUFFICIENT, 0.02f));
@@ -34,13 +29,9 @@ public class ToiletActivity extends AppCompatActivity {
         mToiletList.addLast(new Toilet("2d71c162", "科研 13-6", ToiletState.DISCONNECTED, -1.0f));
         mToiletList.addLast(new Toilet("fde245cb", "科研 13-7", ToiletState.INSUFFICIENT, 0.09f));
 
-        // Get a handle to the RecyclerView.
         mRecyclerView = findViewById(R.id.recyclerView);
-        // Create an adapter and supply the data to be displayed.
         mAdapter = new ToiletListAdapter(this, mToiletList);
-        // Connect the adapter with the RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
-        // Give the RecyclerView a default layout manager.
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }

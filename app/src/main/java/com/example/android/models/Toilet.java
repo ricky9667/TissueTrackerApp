@@ -7,10 +7,10 @@ public class Toilet {
     private double mPercentage; // percentage of tissue amount
 
     public Toilet(String id, String location, ToiletState state, double amount) {
-        this.mId = id;
-        this.mLocation = location;
-        this.mState = state;
-        this.mPercentage = amount;
+        mId = id;
+        mLocation = location;
+        mState = state;
+        mPercentage = amount;
     }
 
     public String getId() { return mId; }
@@ -20,5 +20,5 @@ public class Toilet {
     public ToiletState getState() { return mState; }
     public void setState(ToiletState state) { mState = state; }
     public double getPercentage() { return mPercentage; }
-    public void setId(double percentage) { mPercentage = percentage; }
+    public void setPercentage(double percentage) { mPercentage = percentage; }
 }

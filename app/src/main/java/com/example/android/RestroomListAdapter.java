@@ -9,11 +9,12 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android.models.Restroom;
+
 import java.util.LinkedList;
 
 public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapter.RestroomViewHolder>  {
-    private final LinkedList<String> mRestroomList;
-    private final LinkedList<String> mDescriptionList;
+    private final LinkedList<Restroom> mRestroomList;
     private LayoutInflater mInflater;
 
     class RestroomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -41,10 +42,9 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
         }
     }
 
-    public RestroomListAdapter(Context context, LinkedList<String> recipeList, LinkedList<String> descriptionList) {
+    public RestroomListAdapter(Context context, LinkedList<Restroom> restroomList) {
         mInflater = LayoutInflater.from(context);
-        mRestroomList = recipeList;
-        mDescriptionList = descriptionList;
+        mRestroomList = restroomList;
     }
 
     @Override
@@ -55,8 +55,9 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
 
     @Override
     public void onBindViewHolder(RestroomViewHolder holder, int position) {
-        holder.restroomListItemTitleView.setText(mRestroomList.get(position));
-        holder.restroomListItemContentView.setText(mDescriptionList.get(position));
+        Restroom restroom = mRestroomList.get(position);
+        holder.restroomListItemTitleView.setText(restroom.getLocation());
+        holder.restroomListItemContentView.setText(restroom.getId());
     }
 
     @Override
