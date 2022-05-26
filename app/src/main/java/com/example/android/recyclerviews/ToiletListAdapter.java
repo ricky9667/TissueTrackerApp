@@ -1,4 +1,4 @@
-package com.example.android;
+package com.example.android.recyclerviews;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android.R;
 import com.example.android.models.Toilet;
 import com.example.android.models.ToiletState;
 

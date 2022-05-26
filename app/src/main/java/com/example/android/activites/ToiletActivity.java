@@ -1,4 +1,4 @@
-package com.example.android;
+package com.example.android.activites;
 
 import android.os.Bundle;
 
@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android.R;
+import com.example.android.recyclerviews.ToiletListAdapter;
 import com.example.android.models.Toilet;
 import com.example.android.models.ToiletState;
 

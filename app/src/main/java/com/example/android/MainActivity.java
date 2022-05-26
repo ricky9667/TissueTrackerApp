@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.models.Restroom;
-import com.example.android.models.Toilet;
-import com.example.android.models.ToiletState;
+import com.example.android.recyclerviews.RestroomListAdapter;
 
 import java.util.LinkedList;
 

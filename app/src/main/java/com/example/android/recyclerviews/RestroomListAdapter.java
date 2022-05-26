@@ -1,4 +1,4 @@
-package com.example.android;
+package com.example.android.recyclerviews;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android.R;
+import com.example.android.activites.ToiletActivity;
 import com.example.android.models.Restroom;
 
 import java.util.LinkedList;
