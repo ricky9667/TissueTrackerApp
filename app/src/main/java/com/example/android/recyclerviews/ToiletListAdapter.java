@@ -29,7 +29,7 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
             super(itemView);
             toiletStateTextView = itemView.findViewById(R.id.toiletStateTextView);
             toiletIdTextView = itemView.findViewById(R.id.toiletIdTextView);
-            toiletLocationTextView = itemView.findViewById(R.id.toiletLocationTextView2);
+            toiletLocationTextView = itemView.findViewById(R.id.toiletLocationTextView);
             toiletPercentageTextView = itemView.findViewById(R.id.toiletPercentageTextView);
             this.mAdapter = adapter;
             itemView.setOnClickListener(this);

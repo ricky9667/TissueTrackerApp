@@ -1,11 +1,14 @@
 package com.example.android;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android.activites.ToiletActivity;
 import com.example.android.models.Restroom;
 import com.example.android.recyclerviews.RestroomListAdapter;
 
@@ -29,5 +32,10 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new RestroomListAdapter(this, mRestroomList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public void addNewRestroom(View view) {
+        Intent intent = new Intent(view.getContext(), AddRestroomActivity.class);
+        startActivityForResult(intent, 1);
     }
 }
