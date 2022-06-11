@@ -1,6 +1,6 @@
 package com.example.android.models;
 
-public class Toilet {
+public class Toilet{
     private String mId;
     private String mLocation;
     private ToiletState mState;

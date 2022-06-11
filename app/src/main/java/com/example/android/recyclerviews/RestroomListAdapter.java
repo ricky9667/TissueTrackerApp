@@ -2,6 +2,7 @@ package com.example.android.recyclerviews;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,11 @@ import com.example.android.R;
 import com.example.android.activites.ToiletActivity;
 import com.example.android.models.Restroom;
 
-import java.util.LinkedList;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapter.RestroomViewHolder>  {
-    private final LinkedList<Restroom> mRestroomList;
+    private final ArrayList<Restroom> mRestroomList;
     private LayoutInflater mInflater;
 
     class RestroomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -38,13 +40,16 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
             int mPosition = getLayoutPosition();
 
             Intent intent = new Intent(view.getContext(), ToiletActivity.class);
-            String message = String.valueOf(mPosition);
-            intent.putExtra("com.example.android.extra.MESSAGE", message);
+            String position = String.valueOf(mPosition);
+            intent.putExtra("com.example.android.extra.RESTROOM.POSITION", position);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("com.example.android.extra.RESTROOM.LIST", mRestroomList);
+            intent.putExtras(bundle);
             view.getContext().startActivity(intent);
         }
     }
 
-    public RestroomListAdapter(Context context, LinkedList<Restroom> restroomList) {
+    public RestroomListAdapter(Context context, ArrayList<Restroom> restroomList) {
         mInflater = LayoutInflater.from(context);
         mRestroomList = restroomList;
     }

@@ -12,10 +12,11 @@ import com.example.android.R;
 import com.example.android.models.Toilet;
 import com.example.android.models.ToiletState;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.ToiletViewHolder> {
-    private final LinkedList<Toilet> mToiletList;
+    private final ArrayList<Toilet> mToiletList;
     private LayoutInflater mInflater;
 
     class ToiletViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -47,7 +48,7 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
         }
     }
 
-    public ToiletListAdapter(Context context, LinkedList<Toilet> toiletList) {
+    public ToiletListAdapter(Context context, ArrayList<Toilet> toiletList) {
         mInflater = LayoutInflater.from(context);
         mToiletList = toiletList;
     }
