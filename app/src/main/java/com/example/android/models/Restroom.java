@@ -1,6 +1,5 @@
 package com.example.android.models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Restroom extends ArrayList<Toilet> {
@@ -17,15 +16,15 @@ public class Restroom extends ArrayList<Toilet> {
     public String getId() {
         return mId;
     }
-    //    public void setId(String id) { mId = id; }
+    public void setId(String id) { mId = id; }
     public String getLocation() {
         return mLocation;
     }
-    //    public void setLocation(String location) { mLocation = location; }
+    public void setLocation(String location) { mLocation = location; }
     public ArrayList<Toilet> getToiletList() {
         return mToiletList;
     }
-    public void addToiletList(Toilet toilet) {
+    public void addToilet(Toilet toilet) {
         mToiletList.add(toilet);
     }
 }

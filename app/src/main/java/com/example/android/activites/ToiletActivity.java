@@ -10,15 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.AddToiletActivity;
 import com.example.android.R;
+import com.example.android.Store;
 import com.example.android.models.Restroom;
-import com.example.android.recyclerviews.ToiletListAdapter;
 import com.example.android.models.Toilet;
 import com.example.android.models.ToiletState;
-
-import java.util.ArrayList;
+import com.example.android.recyclerviews.ToiletListAdapter;
 
 public class ToiletActivity extends AppCompatActivity {
-    private ArrayList<Toilet> mToiletList = new ArrayList<>();
+    private Restroom restroom = null;
+    private int restroomIndex = -1;
     private RecyclerView mRecyclerView;
     private ToiletListAdapter mAdapter;
 
@@ -28,13 +28,13 @@ public class ToiletActivity extends AppCompatActivity {
         setContentView(R.layout.toilet_activity);
 
         Intent intent = getIntent();
-        int position = Integer.parseInt(intent.getStringExtra("com.example.android.extra.RESTROOM.POSITION"));
-        Bundle bundle = intent.getExtras();
-        ArrayList<Restroom> list = (ArrayList<Restroom>) bundle.getSerializable("com.example.android.extra.RESTROOM.LIST");
-        mToiletList = list.get(position).getToiletList();
+        restroomIndex = intent.getIntExtra("position", -1);
+        if (restroomIndex != -1) {
+            restroom = Store.getInstance().getRestroom(restroomIndex);
+        }
 
         mRecyclerView = findViewById(R.id.recyclerView);
-        mAdapter = new ToiletListAdapter(this, mToiletList);
+        mAdapter = new ToiletListAdapter(this, restroom.getToiletList());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -51,7 +51,7 @@ public class ToiletActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String toiletIdEditText = data.getStringExtra(AddToiletActivity.EXTRA_TOILET_ID);
                 String toiletLocationEditText = data.getStringExtra(AddToiletActivity.EXTRA_TOILET_LOCATION);
-                mToiletList.add(new Toilet(toiletIdEditText, toiletLocationEditText, ToiletState.DISCONNECTED, -1.0f));
+                Store.getInstance().addToilet(restroomIndex, new Toilet(toiletIdEditText, toiletLocationEditText, ToiletState.DISCONNECTED, -1.0f));
                 mRecyclerView.getAdapter().notifyDataSetChanged();
             }
         }

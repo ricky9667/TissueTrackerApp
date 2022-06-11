@@ -36,15 +36,10 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
 
         @Override
         public void onClick(View view) {
-            // Get the position of the item that was clicked.
             int mPosition = getLayoutPosition();
 
             Intent intent = new Intent(view.getContext(), ToiletActivity.class);
-            String position = String.valueOf(mPosition);
-            intent.putExtra("com.example.android.extra.RESTROOM.POSITION", position);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("com.example.android.extra.RESTROOM.LIST", mRestroomList);
-            intent.putExtras(bundle);
+            intent.putExtra("position", mPosition);
             view.getContext().startActivity(intent);
         }
     }
