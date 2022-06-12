@@ -27,8 +27,7 @@ public class ToiletActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.toilet_activity);
 
-        Intent intent = getIntent();
-        restroomIndex = intent.getIntExtra("position", -1);
+        restroomIndex = Store.getInstance().getShowingRestroomIndex();
         if (restroomIndex != -1) {
             restroom = Store.getInstance().getRestroom(restroomIndex);
         }

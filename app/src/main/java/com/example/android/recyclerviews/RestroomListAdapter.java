@@ -2,7 +2,6 @@ package com.example.android.recyclerviews;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,10 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.R;
+import com.example.android.Store;
 import com.example.android.activites.ToiletActivity;
 import com.example.android.models.Restroom;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapter.RestroomViewHolder>  {
@@ -39,7 +38,7 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
             int mPosition = getLayoutPosition();
 
             Intent intent = new Intent(view.getContext(), ToiletActivity.class);
-            intent.putExtra("position", mPosition);
+            Store.getInstance().setShowingRestroomIndex(mPosition);
             view.getContext().startActivity(intent);
         }
     }
