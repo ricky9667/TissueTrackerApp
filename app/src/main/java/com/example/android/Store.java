@@ -66,6 +66,12 @@ public class Store {
         mRestroomList.add(restroom);
     }
 
+    public void deleteRestroom(int position) {
+        if (position < mRestroomList.size()) {
+            mRestroomList.remove(position);
+        }
+    }
+
     public void addToilet(int restroomIndex, Toilet toilet) {
         mRestroomList.get(restroomIndex).addToilet(toilet);
     }
