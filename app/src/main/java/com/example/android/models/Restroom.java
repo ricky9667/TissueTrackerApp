@@ -27,4 +27,7 @@ public class Restroom extends ArrayList<Toilet> {
     public void addToilet(Toilet toilet) {
         mToiletList.add(toilet);
     }
+    public void deleteToilet(int position) {
+        mToiletList.remove(position);
+    }
 }

@@ -77,6 +77,10 @@ public class Store {
         mRestroomList.get(restroomIndex).addToilet(toilet);
     }
 
+    public void deleteToilet(int restroomIndex, int position) {
+        mRestroomList.get(restroomIndex).deleteToilet(position);
+    }
+
     public void setShowingRestroomIndex(int restroomIndex) {
         mShowingRestroomIndex = restroomIndex;
     }
