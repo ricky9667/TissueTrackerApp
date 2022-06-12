@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Store {
     private static Store instance = null;
     private final ArrayList<Restroom> mRestroomList = new ArrayList<>();
+    private int mShowingRestroomIndex = -1;
 
     private Store() { }
 
@@ -74,5 +75,13 @@ public class Store {
 
     public void addToilet(int restroomIndex, Toilet toilet) {
         mRestroomList.get(restroomIndex).addToilet(toilet);
+    }
+
+    public void setShowingRestroomIndex(int restroomIndex) {
+        mShowingRestroomIndex = restroomIndex;
+    }
+
+    public int getShowingRestroomIndex() {
+        return mShowingRestroomIndex;
     }
 }
