@@ -7,11 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.android.models.Restroom;
+
 public class AddRestroomActivity extends AppCompatActivity {
-    public static final String EXTRA_RESTROOM_ID = "com.example.android.TissueTrackerApp.extra.REPLY.RestroomId";
-    public static final String EXTRA_RESTROOM_LOCATION = "com.example.android.TissueTrackerApp.extra.REPLY.RestroomLocation";
-    public EditText restroomIdEditText;
-    public EditText restroomLocationEditText;
+    private EditText restroomIdEditText;
+    private EditText restroomLocationEditText;
+    private final Store store = Store.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +24,9 @@ public class AddRestroomActivity extends AppCompatActivity {
 
     public void submitNewRestroom(View view) {
         Intent replyIntent = new Intent();
-        replyIntent.putExtra(EXTRA_RESTROOM_ID, restroomIdEditText.getText().toString());
-        replyIntent.putExtra(EXTRA_RESTROOM_LOCATION, restroomLocationEditText.getText().toString());
+        final String restroomId = restroomIdEditText.getText().toString();
+        final String restroomLocation = restroomLocationEditText.getText().toString();
+        store.addRestroom(new Restroom(restroomId, restroomLocation));
         setResult(RESULT_OK, replyIntent);
         finish();
     }
