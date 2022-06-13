@@ -24,7 +24,7 @@
             android:layout_marginLeft="6dp"
             android:layout_marginEnd="12dp"
             android:layout_marginRight="12dp"
-            android:contentDescription="State"
+            android:contentDescription="@string/state_color_description"
             app:srcCompat="@drawable/state_colors" />
 
         <LinearLayout
