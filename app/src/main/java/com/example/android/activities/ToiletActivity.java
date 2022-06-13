@@ -26,6 +26,7 @@ public class ToiletActivity extends AppCompatActivity {
         int restroomIndex = store.getShowingRestroomIndex();
         if (restroomIndex != -1) {
             restroom = store.getRestroom(restroomIndex);
+            setTitle(restroom.getLocation());
         }
 
         ToiletListAdapter mAdapter = new ToiletListAdapter(this, restroom.getToiletList());
