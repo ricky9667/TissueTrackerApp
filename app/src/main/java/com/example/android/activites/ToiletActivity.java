@@ -8,16 +8,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.android.AddToiletActivity;
 import com.example.android.R;
-import com.example.android.Store;
-import com.example.android.models.Restroom;
-import com.example.android.recyclerviews.ToiletListAdapter;
+import com.example.android.adapters.ToiletListAdapter;
+import com.example.android.classes.Restroom;
+import com.example.android.store.Store;
 
 public class ToiletActivity extends AppCompatActivity {
+    private final Store store = Store.getInstance();
     private Restroom restroom = null;
     private RecyclerView mRecyclerView;
-    private final Store store = Store.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

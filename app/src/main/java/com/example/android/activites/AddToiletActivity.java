@@ -1,4 +1,4 @@
-package com.example.android;
+package com.example.android.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,13 +7,15 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.android.models.Toilet;
-import com.example.android.models.ToiletState;
+import com.example.android.R;
+import com.example.android.classes.Toilet;
+import com.example.android.classes.ToiletState;
+import com.example.android.store.Store;
 
 public class AddToiletActivity extends AppCompatActivity {
+    private final Store store = Store.getInstance();
     private EditText toiletIdEditText;
     private EditText toiletLocationEditText;
-    private final Store store = Store.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

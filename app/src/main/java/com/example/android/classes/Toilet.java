@@ -1,4 +1,4 @@
-package com.example.android.models;
+package com.example.android.classes;
 
 public class Toilet{
     private String mId;

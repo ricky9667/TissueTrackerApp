@@ -1,8 +1,8 @@
-package com.example.android;
+package com.example.android.store;
 
-import com.example.android.models.Restroom;
-import com.example.android.models.Toilet;
-import com.example.android.models.ToiletState;
+import com.example.android.classes.Restroom;
+import com.example.android.classes.Toilet;
+import com.example.android.classes.ToiletState;
 
 import java.util.ArrayList;
 
@@ -49,7 +49,6 @@ public class Store {
         instance.addToilet(2, new Toilet("7fda5054", "科研 11-5", ToiletState.DISCONNECTED, -1.0f));
         instance.addToilet(2, new Toilet("2d71c162", "科研 11-6", ToiletState.DISCONNECTED, -1.0f));
         instance.addToilet(2, new Toilet("fde245cb", "科研 11-7", ToiletState.INSUFFICIENT, 0.09f));
-
     }
 
     public ArrayList<Restroom> getRestrooms() {

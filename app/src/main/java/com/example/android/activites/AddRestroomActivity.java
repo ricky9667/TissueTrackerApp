@@ -1,18 +1,20 @@
-package com.example.android;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.android.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.android.models.Restroom;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.android.R;
+import com.example.android.classes.Restroom;
+import com.example.android.store.Store;
 
 public class AddRestroomActivity extends AppCompatActivity {
+    private final Store store = Store.getInstance();
     private EditText restroomIdEditText;
     private EditText restroomLocationEditText;
-    private final Store store = Store.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package com.example.android;
+package com.example.android.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,20 +8,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.android.recyclerviews.RestroomListAdapter;
+import com.example.android.R;
+import com.example.android.adapters.RestroomListAdapter;
+import com.example.android.store.Store;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView mRecyclerView;
-    private RestroomListAdapter mAdapter;
     private final Store store = Store.getInstance();
+    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        RestroomListAdapter mAdapter = new RestroomListAdapter(this, store.getRestrooms());
         mRecyclerView = findViewById(R.id.recyclerView);
-        mAdapter = new RestroomListAdapter(this, store.getRestrooms());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

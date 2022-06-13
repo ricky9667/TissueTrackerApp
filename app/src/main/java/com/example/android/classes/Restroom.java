@@ -1,11 +1,11 @@
-package com.example.android.models;
+package com.example.android.classes;
 
 import java.util.ArrayList;
 
 public class Restroom extends ArrayList<Toilet> {
     private String mId;
     private String mLocation;
-    private ArrayList<Toilet> mToiletList;
+    private final ArrayList<Toilet> mToiletList;
 
     public Restroom(String id, String location) {
         mId = id;

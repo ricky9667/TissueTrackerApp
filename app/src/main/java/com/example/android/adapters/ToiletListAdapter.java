@@ -1,4 +1,4 @@
-package com.example.android.recyclerviews;
+package com.example.android.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -16,26 +16,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.R;
-import com.example.android.Store;
-import com.example.android.models.Toilet;
-import com.example.android.models.ToiletState;
+import com.example.android.classes.Toilet;
+import com.example.android.classes.ToiletState;
+import com.example.android.store.Store;
 
 import java.util.ArrayList;
 
 public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.ToiletViewHolder> {
     private final ArrayList<Toilet> mToiletList;
-    private LayoutInflater mInflater;
-    boolean isEnable = false;
-    ArrayList<String> selectList = new ArrayList<String>();
+    private final LayoutInflater mInflater;
+    private final ArrayList<String> selectedToiletList = new ArrayList<>();
+    private boolean isEnabled = false;
 
     class ToiletViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        public final TextView toiletIdTextView;
-        public final TextView toiletLocationTextView;
-        public final TextView toiletPercentageTextView;
-        public final TextView toiletStateTextView;
-        public final ImageView toiletStateImageView;
-        public ImageView toiletListItemDeleteCheckBox;
-        public View toiletListItemView;
+        private final Store store = Store.getInstance();
+        private final TextView toiletIdTextView;
+        private final TextView toiletLocationTextView;
+        private final TextView toiletPercentageTextView;
+        private final TextView toiletStateTextView;
+        private final ImageView toiletStateImageView;
+        private final ImageView toiletListItemDeleteCheckBox;
+        private final View toiletListItemView;
         final ToiletListAdapter mAdapter;
 
         public ToiletViewHolder(View itemView, ToiletListAdapter adapter) {
@@ -56,15 +57,15 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
         @Override
         public void onClick(View view) {
             int mPosition = getLayoutPosition();
-            if (isEnable) {
+            if (isEnabled) {
                 if (toiletListItemDeleteCheckBox.getVisibility() == View.GONE) {
                     toiletListItemDeleteCheckBox.setVisibility(View.VISIBLE);
                     toiletListItemView.setBackgroundColor(Color.LTGRAY);
-                    selectList.add(String.valueOf(mPosition));
+                    selectedToiletList.add(String.valueOf(mPosition));
                 } else {
                     toiletListItemDeleteCheckBox.setVisibility(View.GONE);
                     toiletListItemView.setBackgroundColor(Color.TRANSPARENT);
-                    selectList.remove(String.valueOf(mPosition));
+                    selectedToiletList.remove(String.valueOf(mPosition));
                 }
             }
         }
@@ -73,7 +74,7 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
         public boolean onLongClick(View view) {
             int mPosition = getLayoutPosition();
 
-            if (!isEnable) {
+            if (!isEnabled) {
                 ActionMode.Callback callback = new ActionMode.Callback() {
                     @Override
                     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -84,21 +85,21 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
 
                     @Override
                     public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                        isEnable = true;
+                        isEnabled = true;
                         toiletListItemDeleteCheckBox.setVisibility(View.VISIBLE);
                         toiletListItemView.setBackgroundColor(Color.LTGRAY);
-                        selectList.add(String.valueOf(mPosition));
+                        selectedToiletList.add(String.valueOf(mPosition));
                         return true;
                     }
 
                     @Override
                     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                         int id = item.getItemId();
-                        int restroomIndex = Store.getInstance().getShowingRestroomIndex();
+                        int restroomIndex = store.getShowingRestroomIndex();
                         if (id == R.id.delete) {
                             for (int i = getItemCount() - 1; i >= 0; i--) {
-                                if (selectList.contains(String.valueOf(i))) {
-                                    Store.getInstance().deleteToilet(restroomIndex, i);
+                                if (selectedToiletList.contains(String.valueOf(i))) {
+                                    store.deleteToilet(restroomIndex, i);
                                 }
                             }
                             mode.finish();
@@ -108,8 +109,8 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
 
                     @Override
                     public void onDestroyActionMode(ActionMode mode) {
-                        isEnable = false;
-                        selectList.clear();
+                        isEnabled = false;
+                        selectedToiletList.clear();
                         notifyDataSetChanged();
                     }
                 };
@@ -118,11 +119,11 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
                 if (toiletListItemDeleteCheckBox.getVisibility() == View.GONE) {
                     toiletListItemDeleteCheckBox.setVisibility(View.VISIBLE);
                     toiletListItemView.setBackgroundColor(Color.LTGRAY);
-                    selectList.add(String.valueOf(mPosition));
+                    selectedToiletList.add(String.valueOf(mPosition));
                 } else {
                     toiletListItemDeleteCheckBox.setVisibility(View.GONE);
                     toiletListItemView.setBackgroundColor(Color.TRANSPARENT);
-                    selectList.remove(String.valueOf(mPosition));
+                    selectedToiletList.remove(String.valueOf(mPosition));
                 }
             }
             return true;
@@ -156,7 +157,7 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
         }
         holder.toiletPercentageTextView.setText(percentageText);
 
-        if (!isEnable) {
+        if (!isEnabled) {
             holder.toiletListItemDeleteCheckBox.setVisibility(View.GONE);
             holder.toiletListItemView.setBackgroundColor(Color.TRANSPARENT);
         }
