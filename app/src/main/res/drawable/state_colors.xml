@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/circle_sufficient"
+        android:maxLevel="@integer/state_sufficient" />
+    <item
+        android:drawable="@drawable/circle_insufficient"
+        android:maxLevel="@integer/state_insufficient" />
+    <item
+        android:drawable="@drawable/circle_disconnected"
+        android:maxLevel="@integer/state_disconnected" />
+    <item
+        android:drawable="@drawable/circle_cleaning"
+        android:maxLevel="@integer/state_cleaning" />
+</level-list>

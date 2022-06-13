@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="color_state_sufficient">#4CAF50</color>
+    <color name="color_state_insufficient">#FFC107</color>
+    <color name="color_state_cleaning">#E91E1E</color>
+    <color name="color_state_disconnected">#888888</color>
+
+    <color name="list_item_bg">#CCF6F6F6</color>
 </resources>

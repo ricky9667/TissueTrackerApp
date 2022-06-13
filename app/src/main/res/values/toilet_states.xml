@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="state_sufficient">0</integer>
+    <integer name="state_insufficient">1</integer>
+    <integer name="state_disconnected">2</integer>
+    <integer name="state_cleaning">3</integer>
+</resources>
