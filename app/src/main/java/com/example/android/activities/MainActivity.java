@@ -1,4 +1,4 @@
-package com.example.android.activites;
+package com.example.android.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,33 +9,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.R;
-import com.example.android.adapters.ToiletListAdapter;
-import com.example.android.classes.Restroom;
+import com.example.android.adapters.RestroomListAdapter;
 import com.example.android.store.Store;
 
-public class ToiletActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     private final Store store = Store.getInstance();
-    private Restroom restroom = null;
     private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.toilet_activity);
+        setContentView(R.layout.activity_main);
 
-        int restroomIndex = store.getShowingRestroomIndex();
-        if (restroomIndex != -1) {
-            restroom = store.getRestroom(restroomIndex);
-        }
-
-        ToiletListAdapter mAdapter = new ToiletListAdapter(this, restroom.getToiletList());
+        RestroomListAdapter mAdapter = new RestroomListAdapter(this, store.getRestrooms());
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public void addNewToilet(View view) {
-        Intent intent = new Intent(view.getContext(), AddToiletActivity.class);
+    public void addNewRestroom(View view) {
+        Intent intent = new Intent(view.getContext(), AddRestroomActivity.class);
         startActivityForResult(intent, 1);
     }
 

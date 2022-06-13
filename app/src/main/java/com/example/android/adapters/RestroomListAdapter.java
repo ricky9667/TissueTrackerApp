@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.R;
-import com.example.android.activites.ToiletActivity;
+import com.example.android.activities.ToiletActivity;
 import com.example.android.classes.Restroom;
 import com.example.android.store.Store;
 
