@@ -44,6 +44,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toiletIdEditText" />
 
+    <TextView
+        android:id="@+id/tissueAmountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="32dp"
+        android:text="Tissue amount: 50%"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toiletLocationTextView" />
+
     <EditText
         android:id="@+id/toiletLocationEditText"
         android:layout_width="wrap_content"
@@ -55,6 +67,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/toiletLocationTextView"
         app:layout_constraintTop_toBottomOf="@+id/toiletIdEditText" />
+
+    <SeekBar
+        android:id="@+id/tissueAmountSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:progress="50"
+        android:max="100"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tissueAmountTextView"
+        app:layout_constraintTop_toBottomOf="@+id/toiletLocationEditText" />
 
     <Button
         android:id="@+id/addToiletSubmitButton"
