@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TissueTrackerApp">
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,28 +18,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.ToiletActivity"
+            android:name=".view.ToiletActivity"
             android:exported="false"
             android:label="ToiletActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
+                android:value=".view.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.AddRestroomActivity"
+            android:name=".view.AddRestroomActivity"
             android:exported="false"
             android:label="AddRestroomActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
+                android:value=".view.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.AddToiletActivity"
+            android:name=".view.AddToiletActivity"
             android:exported="false"
             android:label="AddToiletActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.ToiletActivity" />
+                android:value=".view.ToiletActivity" />
         </activity>
     </application>
 

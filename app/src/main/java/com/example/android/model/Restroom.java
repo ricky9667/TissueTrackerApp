@@ -1,4 +1,4 @@
-package com.example.android.classes;
+package com.example.android.model;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.android.adapters;
+package com.example.android.viewModel;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.R;
-import com.example.android.activities.ToiletActivity;
-import com.example.android.classes.Restroom;
+import com.example.android.view.ToiletActivity;
+import com.example.android.model.Restroom;
 import com.example.android.store.Store;
 
 import java.util.ArrayList;

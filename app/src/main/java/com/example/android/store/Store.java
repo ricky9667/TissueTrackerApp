@@ -1,8 +1,8 @@
 package com.example.android.store;
 
-import com.example.android.classes.Restroom;
-import com.example.android.classes.Toilet;
-import com.example.android.classes.ToiletState;
+import com.example.android.model.Restroom;
+import com.example.android.model.Toilet;
+import com.example.android.model.ToiletState;
 
 import java.util.ArrayList;
 

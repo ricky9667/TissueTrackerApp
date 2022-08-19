@@ -1,4 +1,4 @@
-package com.example.android.activities;
+package com.example.android.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.R;
-import com.example.android.classes.Restroom;
+import com.example.android.model.Restroom;
 import com.example.android.store.Store;
 
 public class AddRestroomActivity extends AppCompatActivity {

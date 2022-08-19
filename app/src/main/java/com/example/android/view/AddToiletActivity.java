@@ -1,19 +1,17 @@
-package com.example.android.activities;
+package com.example.android.view;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.R;
-import com.example.android.classes.Toilet;
-import com.example.android.classes.ToiletState;
+import com.example.android.model.Toilet;
+import com.example.android.model.ToiletState;
 import com.example.android.store.Store;
 
 public class AddToiletActivity extends AppCompatActivity {
