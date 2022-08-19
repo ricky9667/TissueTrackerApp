@@ -1,4 +1,4 @@
-package com.example.android.service;
+package com.example.android.utils;
 
 import android.os.AsyncTask;
 

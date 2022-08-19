@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.R;
-import com.example.android.service.BasicAsyncTask;
+import com.example.android.utils.BasicAsyncTask;
 import com.example.android.viewModel.RestroomListAdapter;
 import com.example.android.viewModel.RestroomsViewModel;
 
