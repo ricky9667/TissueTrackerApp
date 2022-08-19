@@ -16,8 +16,8 @@ public class RestroomsViewModel {
         _restroomListAdapter = adapter;
     }
 
-    public void fetchRestroomsData() {
-        String result = _client.getAllRestrooms();
+    public void loadRestroomsData() {
+        String result = _client.fetchAllRestrooms();
 
         if (result != null) {
             try {

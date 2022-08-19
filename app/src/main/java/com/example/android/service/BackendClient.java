@@ -1,7 +1,5 @@
 package com.example.android.service;
 
-import android.os.AsyncTask;
-
 import java.io.IOException;
 import java.util.Objects;
 
@@ -25,7 +23,7 @@ public class BackendClient {
         return instance;
     }
 
-    public String getAllRestrooms() {
+    public String fetchAllRestrooms() {
         final String path = "/restrooms";
         Request request = new Request.Builder().url(_baseUrl + path).build();
         try (Response response = _client.newCall(request).execute()) {
