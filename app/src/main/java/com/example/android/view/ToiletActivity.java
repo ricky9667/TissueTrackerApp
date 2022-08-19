@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.android.R;
 import com.example.android.viewModel.ToiletListAdapter;
 import com.example.android.model.Restroom;
-import com.example.android.store.Store;
+import com.example.android.service.Store;
 
 public class ToiletActivity extends AppCompatActivity {
     private final Store store = Store.getInstance();

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.R;
 import com.example.android.model.Restroom;
-import com.example.android.store.Store;
+import com.example.android.service.Store;
 
 public class AddRestroomActivity extends AppCompatActivity {
     private final Store store = Store.getInstance();

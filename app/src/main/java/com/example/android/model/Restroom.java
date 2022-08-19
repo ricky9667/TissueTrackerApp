@@ -1,33 +1,57 @@
 package com.example.android.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class Restroom extends ArrayList<Toilet> {
-    private String mId;
-    private String mLocation;
-    private final ArrayList<Toilet> mToiletList;
+    private String _id;
+    private String _location;
+    private final ArrayList<Toilet> _toiletList; // TODO: remove after data is all fetched from backend
 
     public Restroom(String id, String location) {
-        mId = id;
-        mLocation = location;
-        mToiletList = new ArrayList<>();
+        _id = id;
+        _location = location;
+        _toiletList = new ArrayList<>();
+    }
+
+    public static Restroom fromJson(JSONObject restroomObject) {
+        try {
+            String id = restroomObject.getString("id");
+            String location = restroomObject.getString("location");
+            return new Restroom(id, location);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String getId() {
-        return mId;
+        return _id;
     }
-    public void setId(String id) { mId = id; }
+
+    public void setId(String id) {
+        _id = id;
+    }
+
     public String getLocation() {
-        return mLocation;
+        return _location;
     }
-    public void setLocation(String location) { mLocation = location; }
+
+    public void setLocation(String location) {
+        _location = location;
+    }
+
     public ArrayList<Toilet> getToiletList() {
-        return mToiletList;
+        return _toiletList;
     }
+
     public void addToilet(Toilet toilet) {
-        mToiletList.add(toilet);
+        _toiletList.add(toilet);
     }
+
     public void deleteToilet(int position) {
-        mToiletList.remove(position);
+        _toiletList.remove(position);
     }
 }

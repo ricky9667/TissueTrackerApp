@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.android.R;
 import com.example.android.model.Toilet;
 import com.example.android.model.ToiletState;
-import com.example.android.store.Store;
+import com.example.android.service.Store;
 
 public class AddToiletActivity extends AppCompatActivity {
     private final Store store = Store.getInstance();

@@ -10,26 +10,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.R;
 import com.example.android.viewModel.RestroomListAdapter;
-import com.example.android.store.Store;
+import com.example.android.viewModel.RestroomsViewModel;
 
 public class MainActivity extends AppCompatActivity {
-    private final Store store = Store.getInstance();
-    private RecyclerView mRecyclerView;
+    private RestroomsViewModel _viewModel;
+    private RecyclerView _restroomRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RestroomListAdapter mAdapter = new RestroomListAdapter(this, store.getRestrooms());
-        mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
+        _viewModel = new RestroomsViewModel();
 
-    public void addNewRestroom(View view) {
-        Intent intent = new Intent(view.getContext(), AddRestroomActivity.class);
-        startActivityForResult(intent, 1);
+        RestroomListAdapter adapter = new RestroomListAdapter(this, _viewModel.getRestroomList());
+        _restroomRecyclerView = findViewById(R.id.recyclerView);
+        _restroomRecyclerView.setAdapter(adapter);
+        _restroomRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                _viewModel.fetchRestroomsData();
+            }
+        }).start();
     }
 
     @Override
@@ -37,8 +41,13 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                mRecyclerView.getAdapter().notifyDataSetChanged();
+                _restroomRecyclerView.getAdapter().notifyDataSetChanged();
             }
         }
+    }
+
+    public void addNewRestroom(View view) {
+        Intent intent = new Intent(view.getContext(), AddRestroomActivity.class);
+        startActivityForResult(intent, 1);
     }
 }

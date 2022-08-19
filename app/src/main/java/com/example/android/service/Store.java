@@ -1,4 +1,4 @@
-package com.example.android.store;
+package com.example.android.service;
 
 import com.example.android.model.Restroom;
 import com.example.android.model.Toilet;
