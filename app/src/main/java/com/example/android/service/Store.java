@@ -6,6 +6,8 @@ import com.example.android.model.ToiletState;
 
 import java.util.ArrayList;
 
+
+// TODO: Store will be completely removed after all data is replaced from backend APIs
 public class Store {
     private static Store instance = null;
     private final ArrayList<Restroom> mRestroomList = new ArrayList<>();
