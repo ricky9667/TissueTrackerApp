@@ -1,11 +1,13 @@
-package com.example.android.store;
+package com.example.android.service;
 
-import com.example.android.classes.Restroom;
-import com.example.android.classes.Toilet;
-import com.example.android.classes.ToiletState;
+import com.example.android.model.Restroom;
+import com.example.android.model.Toilet;
+import com.example.android.model.ToiletState;
 
 import java.util.ArrayList;
 
+
+// TODO: Store will be completely removed after all data is replaced from backend APIs
 public class Store {
     private static Store instance = null;
     private final ArrayList<Restroom> mRestroomList = new ArrayList<>();

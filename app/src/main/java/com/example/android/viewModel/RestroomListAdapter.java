@@ -1,4 +1,4 @@
-package com.example.android.adapters;
+package com.example.android.viewModel;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,17 +17,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.R;
-import com.example.android.activities.ToiletActivity;
-import com.example.android.classes.Restroom;
-import com.example.android.store.Store;
+import com.example.android.view.ToiletActivity;
+import com.example.android.model.Restroom;
+import com.example.android.service.Store;
 
 import java.util.ArrayList;
 
 public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapter.RestroomViewHolder> {
-    private final ArrayList<Restroom> mRestroomList;
-    private final LayoutInflater mInflater;
-    private final ArrayList<String> selectedRestroomList = new ArrayList<>();
-    private boolean isEnabled = false;
+    private final LayoutInflater _inflater;
+    private final ArrayList<Restroom> _restroomList = new ArrayList<>();
+    private final ArrayList<String> _selectedRestroomList = new ArrayList<>();
+    private boolean _isEnabled = false;
 
     class RestroomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private final Store store = Store.getInstance();
@@ -52,15 +52,15 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
         @Override
         public void onClick(View view) {
             int mPosition = getLayoutPosition();
-            if (isEnabled) {
+            if (_isEnabled) {
                 if (restroomListItemDeleteCheckBox.getVisibility() == View.GONE) {
                     restroomListItemDeleteCheckBox.setVisibility(View.VISIBLE);
                     restroomListItemView.setBackgroundColor(Color.LTGRAY);
-                    selectedRestroomList.add(String.valueOf(mPosition));
+                    _selectedRestroomList.add(String.valueOf(mPosition));
                 } else {
                     restroomListItemDeleteCheckBox.setVisibility(View.GONE);
                     restroomListItemView.setBackgroundColor(Color.TRANSPARENT);
-                    selectedRestroomList.remove(String.valueOf(mPosition));
+                    _selectedRestroomList.remove(String.valueOf(mPosition));
                 }
             } else {
                 Intent intent = new Intent(view.getContext(), ToiletActivity.class);
@@ -72,7 +72,7 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
         @Override
         public boolean onLongClick(View view) {
             int mPosition = getLayoutPosition();
-            if (!isEnabled) {
+            if (!_isEnabled) {
                 ActionMode.Callback callback = new ActionMode.Callback() {
                     @Override
                     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -83,10 +83,10 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
 
                     @Override
                     public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                        isEnabled = true;
+                        _isEnabled = true;
                         restroomListItemDeleteCheckBox.setVisibility(View.VISIBLE);
                         restroomListItemView.setBackgroundColor(Color.LTGRAY);
-                        selectedRestroomList.add(String.valueOf(mPosition));
+                        _selectedRestroomList.add(String.valueOf(mPosition));
                         return true;
                     }
 
@@ -95,7 +95,7 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
                         int id = item.getItemId();
                         if (id == R.id.delete) {
                             for (int i = getItemCount() - 1; i >= 0; i--) {
-                                if (selectedRestroomList.contains(String.valueOf(i))) {
+                                if (_selectedRestroomList.contains(String.valueOf(i))) {
                                     store.deleteRestroom(i);
                                 }
                             }
@@ -106,8 +106,8 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
 
                     @Override
                     public void onDestroyActionMode(ActionMode mode) {
-                        isEnabled = false;
-                        selectedRestroomList.clear();
+                        _isEnabled = false;
+                        _selectedRestroomList.clear();
                         notifyDataSetChanged();
                     }
                 };
@@ -116,35 +116,34 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
                 if (restroomListItemDeleteCheckBox.getVisibility() == View.GONE) {
                     restroomListItemDeleteCheckBox.setVisibility(View.VISIBLE);
                     restroomListItemView.setBackgroundColor(Color.LTGRAY);
-                    selectedRestroomList.add(String.valueOf(mPosition));
+                    _selectedRestroomList.add(String.valueOf(mPosition));
                 } else {
                     restroomListItemDeleteCheckBox.setVisibility(View.GONE);
                     restroomListItemView.setBackgroundColor(Color.TRANSPARENT);
-                    selectedRestroomList.remove(String.valueOf(mPosition));
+                    _selectedRestroomList.remove(String.valueOf(mPosition));
                 }
             }
             return true;
         }
     }
 
-    public RestroomListAdapter(Context context, ArrayList<Restroom> restroomList) {
-        mInflater = LayoutInflater.from(context);
-        mRestroomList = restroomList;
+    public RestroomListAdapter(Context context) {
+        _inflater = LayoutInflater.from(context);
     }
 
     @Override
     public RestroomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mItemView = mInflater.inflate(R.layout.restroom_list_item, parent, false);
-        return new RestroomViewHolder(mItemView, this);
+        View itemView = _inflater.inflate(R.layout.restroom_list_item, parent, false);
+        return new RestroomViewHolder(itemView, this);
     }
 
     @Override
     public void onBindViewHolder(RestroomViewHolder holder, int position) {
-        Restroom restroom = mRestroomList.get(position);
+        Restroom restroom = _restroomList.get(position);
         holder.restroomListItemTitleView.setText(restroom.getLocation());
         holder.restroomListItemContentView.setText(restroom.getId());
 
-        if (!isEnabled) {
+        if (!_isEnabled) {
             holder.restroomListItemDeleteCheckBox.setVisibility(View.GONE);
             holder.restroomListItemView.setBackgroundColor(Color.TRANSPARENT);
         }
@@ -152,6 +151,10 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
 
     @Override
     public int getItemCount() {
-        return mRestroomList.size();
+        return _restroomList.size();
+    }
+
+    public ArrayList<Restroom> getRestroomList() {
+        return _restroomList;
     }
 }

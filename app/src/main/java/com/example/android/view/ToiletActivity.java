@@ -1,4 +1,4 @@
-package com.example.android.activities;
+package com.example.android.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.R;
-import com.example.android.adapters.ToiletListAdapter;
-import com.example.android.classes.Restroom;
-import com.example.android.store.Store;
+import com.example.android.viewModel.ToiletListAdapter;
+import com.example.android.model.Restroom;
+import com.example.android.service.Store;
 
 public class ToiletActivity extends AppCompatActivity {
     private final Store store = Store.getInstance();
