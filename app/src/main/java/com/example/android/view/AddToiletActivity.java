@@ -18,8 +18,8 @@ import java.util.ArrayList;
 
 public class AddToiletActivity extends AppCompatActivity {
     private ToiletInfoViewModel _viewModel;
-    private Spinner toiletIdSpinner;
-    private EditText toiletLocationEditText;
+    private Spinner _toiletIdSpinner;
+    private EditText _toiletLocationEditText;
     private ToiletState toiletState = ToiletState.SUFFICIENT;
 
     @Override
@@ -34,17 +34,17 @@ public class AddToiletActivity extends AppCompatActivity {
         final Runnable backgroundTask = () -> _viewModel.loadUndeployedIds();
         new BasicAsyncTask(backgroundTask, adapter::notifyDataSetChanged).execute();
 
-        toiletIdSpinner = findViewById(R.id.toiletIdSpinner);
-        toiletIdSpinner.setAdapter(adapter);
-        toiletLocationEditText = findViewById(R.id.toiletLocationEditText);
+        _toiletIdSpinner = findViewById(R.id.toiletIdSpinner);
+        _toiletIdSpinner.setAdapter(adapter);
+        _toiletLocationEditText = findViewById(R.id.toiletLocationEditText);
     }
 
     public void submitNewToilet(View view) {
         Intent replyIntent = new Intent();
 
-        final String restroomId = "1"; // debug
-        final String toiletId = toiletIdSpinner.getSelectedItem().toString();
-        final String toiletLocation = toiletLocationEditText.getText().toString();
+        final String restroomId = "1"; // TODO: should replace with real restroomId from ToiletActivity
+        final String toiletId = _toiletIdSpinner.getSelectedItem().toString();
+        final String toiletLocation = _toiletLocationEditText.getText().toString();
 
         final Runnable backgroundTask = () -> _viewModel.registerToilet(restroomId, toiletId, toiletLocation);
         new BasicAsyncTask(backgroundTask, null).execute();
