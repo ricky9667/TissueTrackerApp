@@ -25,8 +25,6 @@ public class AddToiletActivity extends AppCompatActivity {
     private ToiletInfoViewModel _viewModel;
     private Spinner toiletIdSpinner;
     private EditText toiletLocationEditText;
-    private TextView tissueAmountTextView;
-    private SeekBar tissueAmountSeekBar;
     private ToiletState toiletState = ToiletState.SUFFICIENT;
 
     @Override
@@ -44,22 +42,6 @@ public class AddToiletActivity extends AppCompatActivity {
         toiletIdSpinner.setAdapter(adapter);
 
         toiletLocationEditText = findViewById(R.id.toiletLocationEditText);
-        tissueAmountTextView = findViewById(R.id.tissueAmountTextView);
-        tissueAmountSeekBar = findViewById(R.id.tissueAmountSeekBar);
-        tissueAmountSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                tissueAmountTextView.setText("Tissue amount: " + i + "%");
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });
     }
 
     public void submitNewToilet(View view) {
