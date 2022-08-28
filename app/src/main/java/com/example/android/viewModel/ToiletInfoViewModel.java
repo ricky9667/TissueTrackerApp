@@ -27,8 +27,6 @@ public class ToiletInfoViewModel {
                     String id = toiletIdsArray.getString(index);
                     _undeployedToiletIds.add(id);
                 }
-
-                System.out.println("undeployedToiletIds = " + _undeployedToiletIds);
             } catch (Exception e) {
                 e.printStackTrace();
             }

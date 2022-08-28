@@ -5,23 +5,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.SeekBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.R;
-import com.example.android.model.Toilet;
 import com.example.android.model.ToiletState;
-import com.example.android.service.Store;
 import com.example.android.utils.BasicAsyncTask;
 import com.example.android.viewModel.ToiletInfoViewModel;
 
 import java.util.ArrayList;
 
 public class AddToiletActivity extends AppCompatActivity {
-    private final Store store = Store.getInstance();
     private ToiletInfoViewModel _viewModel;
     private Spinner toiletIdSpinner;
     private EditText toiletLocationEditText;
