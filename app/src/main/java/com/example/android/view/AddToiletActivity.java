@@ -13,9 +13,12 @@ import com.example.android.R;
 import com.example.android.model.Toilet;
 import com.example.android.model.ToiletState;
 import com.example.android.service.Store;
+import com.example.android.utils.BasicAsyncTask;
+import com.example.android.viewModel.ToiletInfoViewModel;
 
 public class AddToiletActivity extends AppCompatActivity {
     private final Store store = Store.getInstance();
+    private ToiletInfoViewModel _viewModel;
     private EditText toiletIdEditText;
     private EditText toiletLocationEditText;
     private TextView tissueAmountTextView;
@@ -26,6 +29,11 @@ public class AddToiletActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_toilet_activity);
+
+        _viewModel = new ToiletInfoViewModel();
+
+        new BasicAsyncTask(() -> _viewModel.loadUndeployedIds(), () -> {}).execute();
+
         toiletIdEditText = findViewById(R.id.toiletIdEditText);
         toiletLocationEditText = findViewById(R.id.toiletLocationEditText);
         tissueAmountTextView = findViewById(R.id.tissueAmountTextView);
@@ -37,10 +45,12 @@ public class AddToiletActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
         });
     }
 
