@@ -31,7 +31,8 @@ public class AddToiletActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, arrayList);
         _viewModel = new ToiletInfoViewModel(arrayList);
 
-        new BasicAsyncTask(() -> _viewModel.loadUndeployedIds(), adapter::notifyDataSetChanged).execute();
+        final Runnable backgroundTask = () -> _viewModel.loadUndeployedIds();
+        new BasicAsyncTask(backgroundTask, adapter::notifyDataSetChanged).execute();
 
         toiletIdSpinner = findViewById(R.id.toiletIdSpinner);
         toiletIdSpinner.setAdapter(adapter);
@@ -39,19 +40,17 @@ public class AddToiletActivity extends AppCompatActivity {
     }
 
     public void submitNewToilet(View view) {
-//        Intent replyIntent = new Intent();
-//        final String toiletId = toiletIdEditText.getText().toString();
-//        final String toiletLocation = toiletLocationEditText.getText().toString();
-//        final double percentage = tissueAmountSeekBar.getProgress() / 100.0f;
-//
-//        if (toiletState == ToiletState.SUFFICIENT) {
-//            toiletState = percentage >= 0.1f ? ToiletState.SUFFICIENT : ToiletState.INSUFFICIENT;
-//        }
-//
-//        int restroomIndex = store.getShowingRestroomIndex();
-//        store.addToilet(restroomIndex, new Toilet(toiletId, toiletLocation, toiletState, percentage));
-//        setResult(RESULT_OK, replyIntent);
-//        finish();
+        Intent replyIntent = new Intent();
+
+        final String restroomId = "1"; // debug
+        final String toiletId = toiletIdSpinner.getSelectedItem().toString();
+        final String toiletLocation = toiletLocationEditText.getText().toString();
+
+        final Runnable backgroundTask = () -> _viewModel.registerToilet(restroomId, toiletId, toiletLocation);
+        new BasicAsyncTask(backgroundTask, null).execute();
+
+        setResult(RESULT_OK, replyIntent);
+        finish();
     }
 
     public void onToiletStateChange(View view) {

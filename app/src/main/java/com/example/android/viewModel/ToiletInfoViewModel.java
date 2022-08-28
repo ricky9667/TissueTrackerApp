@@ -1,5 +1,7 @@
 package com.example.android.viewModel;
 
+import android.util.Log;
+
 import com.example.android.service.BackendClient;
 
 import org.json.JSONArray;
@@ -30,6 +32,20 @@ public class ToiletInfoViewModel {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void registerToilet(String restroomId, String toiletId, String location) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("restroomId", restroomId);
+            jsonObject.put("toiletId", toiletId);
+            jsonObject.put("location", location);
+
+            String response = _client.registerToilet(jsonObject.toString());
+            Log.d("registerToilet", response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
