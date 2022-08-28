@@ -3,8 +3,10 @@ package com.example.android.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +21,7 @@ import com.example.android.viewModel.ToiletInfoViewModel;
 public class AddToiletActivity extends AppCompatActivity {
     private final Store store = Store.getInstance();
     private ToiletInfoViewModel _viewModel;
-    private EditText toiletIdEditText;
+    private Spinner toiletIdSpinner;
     private EditText toiletLocationEditText;
     private TextView tissueAmountTextView;
     private SeekBar tissueAmountSeekBar;
@@ -34,7 +36,7 @@ public class AddToiletActivity extends AppCompatActivity {
 
         new BasicAsyncTask(() -> _viewModel.loadUndeployedIds(), () -> {}).execute();
 
-        toiletIdEditText = findViewById(R.id.toiletIdEditText);
+        toiletIdSpinner = findViewById(R.id.toiletIdSpinner);
         toiletLocationEditText = findViewById(R.id.toiletLocationEditText);
         tissueAmountTextView = findViewById(R.id.tissueAmountTextView);
         tissueAmountSeekBar = findViewById(R.id.tissueAmountSeekBar);
@@ -55,19 +57,19 @@ public class AddToiletActivity extends AppCompatActivity {
     }
 
     public void submitNewToilet(View view) {
-        Intent replyIntent = new Intent();
-        final String toiletId = toiletIdEditText.getText().toString();
-        final String toiletLocation = toiletLocationEditText.getText().toString();
-        final double percentage = tissueAmountSeekBar.getProgress() / 100.0f;
-
-        if (toiletState == ToiletState.SUFFICIENT) {
-            toiletState = percentage >= 0.1f ? ToiletState.SUFFICIENT : ToiletState.INSUFFICIENT;
-        }
-
-        int restroomIndex = store.getShowingRestroomIndex();
-        store.addToilet(restroomIndex, new Toilet(toiletId, toiletLocation, toiletState, percentage));
-        setResult(RESULT_OK, replyIntent);
-        finish();
+//        Intent replyIntent = new Intent();
+//        final String toiletId = toiletIdEditText.getText().toString();
+//        final String toiletLocation = toiletLocationEditText.getText().toString();
+//        final double percentage = tissueAmountSeekBar.getProgress() / 100.0f;
+//
+//        if (toiletState == ToiletState.SUFFICIENT) {
+//            toiletState = percentage >= 0.1f ? ToiletState.SUFFICIENT : ToiletState.INSUFFICIENT;
+//        }
+//
+//        int restroomIndex = store.getShowingRestroomIndex();
+//        store.addToilet(restroomIndex, new Toilet(toiletId, toiletLocation, toiletState, percentage));
+//        setResult(RESULT_OK, replyIntent);
+//        finish();
     }
 
     public void onToiletStateChange(View view) {
