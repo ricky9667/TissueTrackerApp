@@ -18,6 +18,8 @@ import com.example.android.service.Store;
 import com.example.android.utils.BasicAsyncTask;
 import com.example.android.viewModel.ToiletInfoViewModel;
 
+import java.util.ArrayList;
+
 public class AddToiletActivity extends AppCompatActivity {
     private final Store store = Store.getInstance();
     private ToiletInfoViewModel _viewModel;
@@ -32,11 +34,15 @@ public class AddToiletActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_toilet_activity);
 
-        _viewModel = new ToiletInfoViewModel();
+        ArrayList<String> arrayList = new ArrayList<>();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, arrayList);
+        _viewModel = new ToiletInfoViewModel(arrayList);
 
-        new BasicAsyncTask(() -> _viewModel.loadUndeployedIds(), () -> {}).execute();
+        new BasicAsyncTask(() -> _viewModel.loadUndeployedIds(), () -> adapter.notifyDataSetChanged()).execute();
 
         toiletIdSpinner = findViewById(R.id.toiletIdSpinner);
+        toiletIdSpinner.setAdapter(adapter);
+
         toiletLocationEditText = findViewById(R.id.toiletLocationEditText);
         tissueAmountTextView = findViewById(R.id.tissueAmountTextView);
         tissueAmountSeekBar = findViewById(R.id.tissueAmountSeekBar);
