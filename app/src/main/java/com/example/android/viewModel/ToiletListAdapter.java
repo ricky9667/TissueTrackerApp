@@ -23,31 +23,31 @@ import com.example.android.service.Store;
 import java.util.ArrayList;
 
 public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.ToiletViewHolder> {
-    private final ArrayList<Toilet> mToiletList;
-    private final LayoutInflater mInflater;
-    private final ArrayList<String> selectedToiletList = new ArrayList<>();
-    private boolean isEnabled = false;
+    private final ArrayList<Toilet> _toiletList = new ArrayList<>();
+    private final LayoutInflater _inflater;
+    private final ArrayList<String> _selectedToiletList = new ArrayList<>();
+    private boolean _isEnabled = false;
 
     class ToiletViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        private final Store store = Store.getInstance();
-        private final TextView toiletIdTextView;
-        private final TextView toiletLocationTextView;
-        private final TextView toiletPercentageTextView;
-        private final TextView toiletStateTextView;
-        private final ImageView toiletStateImageView;
-        private final ImageView toiletListItemDeleteCheckBox;
-        private final View toiletListItemView;
+        private final Store _store = Store.getInstance();
+        private final TextView _toiletIdTextView;
+        private final TextView _toiletLocationTextView;
+        private final TextView _toiletPercentageTextView;
+        private final TextView _toiletStateTextView;
+        private final ImageView _toiletStateImageView;
+        private final ImageView _toiletListItemDeleteCheckBox;
+        private final View _toiletListItemView;
         final ToiletListAdapter mAdapter;
 
         public ToiletViewHolder(View itemView, ToiletListAdapter adapter) {
             super(itemView);
-            toiletStateTextView = itemView.findViewById(R.id.toiletStateTextView);
-            toiletIdTextView = itemView.findViewById(R.id.toiletIdTextView);
-            toiletLocationTextView = itemView.findViewById(R.id.toiletLocationTextView);
-            toiletPercentageTextView = itemView.findViewById(R.id.toiletPercentageTextView);
-            toiletStateImageView = itemView.findViewById(R.id.toiletStateImageView);
-            toiletListItemDeleteCheckBox = itemView.findViewById(R.id.toiletDeleteCheckCircle);
-            toiletListItemView = itemView;
+            _toiletStateTextView = itemView.findViewById(R.id.toiletStateTextView);
+            _toiletIdTextView = itemView.findViewById(R.id.toiletIdTextView);
+            _toiletLocationTextView = itemView.findViewById(R.id.toiletLocationTextView);
+            _toiletPercentageTextView = itemView.findViewById(R.id.toiletPercentageTextView);
+            _toiletStateImageView = itemView.findViewById(R.id.toiletStateImageView);
+            _toiletListItemDeleteCheckBox = itemView.findViewById(R.id.toiletDeleteCheckCircle);
+            _toiletListItemView = itemView;
 
             this.mAdapter = adapter;
             itemView.setOnClickListener(this);
@@ -57,15 +57,15 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
         @Override
         public void onClick(View view) {
             int mPosition = getLayoutPosition();
-            if (isEnabled) {
-                if (toiletListItemDeleteCheckBox.getVisibility() == View.GONE) {
-                    toiletListItemDeleteCheckBox.setVisibility(View.VISIBLE);
-                    toiletListItemView.setBackgroundColor(Color.LTGRAY);
-                    selectedToiletList.add(String.valueOf(mPosition));
+            if (_isEnabled) {
+                if (_toiletListItemDeleteCheckBox.getVisibility() == View.GONE) {
+                    _toiletListItemDeleteCheckBox.setVisibility(View.VISIBLE);
+                    _toiletListItemView.setBackgroundColor(Color.LTGRAY);
+                    _selectedToiletList.add(String.valueOf(mPosition));
                 } else {
-                    toiletListItemDeleteCheckBox.setVisibility(View.GONE);
-                    toiletListItemView.setBackgroundColor(Color.TRANSPARENT);
-                    selectedToiletList.remove(String.valueOf(mPosition));
+                    _toiletListItemDeleteCheckBox.setVisibility(View.GONE);
+                    _toiletListItemView.setBackgroundColor(Color.TRANSPARENT);
+                    _selectedToiletList.remove(String.valueOf(mPosition));
                 }
             }
         }
@@ -74,7 +74,7 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
         public boolean onLongClick(View view) {
             int mPosition = getLayoutPosition();
 
-            if (!isEnabled) {
+            if (!_isEnabled) {
                 ActionMode.Callback callback = new ActionMode.Callback() {
                     @Override
                     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -85,21 +85,21 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
 
                     @Override
                     public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                        isEnabled = true;
-                        toiletListItemDeleteCheckBox.setVisibility(View.VISIBLE);
-                        toiletListItemView.setBackgroundColor(Color.LTGRAY);
-                        selectedToiletList.add(String.valueOf(mPosition));
+                        _isEnabled = true;
+                        _toiletListItemDeleteCheckBox.setVisibility(View.VISIBLE);
+                        _toiletListItemView.setBackgroundColor(Color.LTGRAY);
+                        _selectedToiletList.add(String.valueOf(mPosition));
                         return true;
                     }
 
                     @Override
                     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                         int id = item.getItemId();
-                        int restroomIndex = store.getShowingRestroomIndex();
+                        int restroomIndex = _store.getShowingRestroomIndex();
                         if (id == R.id.delete) {
                             for (int i = getItemCount() - 1; i >= 0; i--) {
-                                if (selectedToiletList.contains(String.valueOf(i))) {
-                                    store.deleteToilet(restroomIndex, i);
+                                if (_selectedToiletList.contains(String.valueOf(i))) {
+                                    _store.deleteToilet(restroomIndex, i);
                                 }
                             }
                             mode.finish();
@@ -109,63 +109,62 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
 
                     @Override
                     public void onDestroyActionMode(ActionMode mode) {
-                        isEnabled = false;
-                        selectedToiletList.clear();
+                        _isEnabled = false;
+                        _selectedToiletList.clear();
                         notifyDataSetChanged();
                     }
                 };
                 ((AppCompatActivity) view.getContext()).startActionMode(callback);
             } else {
-                if (toiletListItemDeleteCheckBox.getVisibility() == View.GONE) {
-                    toiletListItemDeleteCheckBox.setVisibility(View.VISIBLE);
-                    toiletListItemView.setBackgroundColor(Color.LTGRAY);
-                    selectedToiletList.add(String.valueOf(mPosition));
+                if (_toiletListItemDeleteCheckBox.getVisibility() == View.GONE) {
+                    _toiletListItemDeleteCheckBox.setVisibility(View.VISIBLE);
+                    _toiletListItemView.setBackgroundColor(Color.LTGRAY);
+                    _selectedToiletList.add(String.valueOf(mPosition));
                 } else {
-                    toiletListItemDeleteCheckBox.setVisibility(View.GONE);
-                    toiletListItemView.setBackgroundColor(Color.TRANSPARENT);
-                    selectedToiletList.remove(String.valueOf(mPosition));
+                    _toiletListItemDeleteCheckBox.setVisibility(View.GONE);
+                    _toiletListItemView.setBackgroundColor(Color.TRANSPARENT);
+                    _selectedToiletList.remove(String.valueOf(mPosition));
                 }
             }
             return true;
         }
     }
 
-    public ToiletListAdapter(Context context, ArrayList<Toilet> toiletList) {
-        mInflater = LayoutInflater.from(context);
-        mToiletList = toiletList;
+    public ToiletListAdapter(Context context) {
+        _inflater = LayoutInflater.from(context);
     }
 
     @Override
     public ToiletViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mItemView = mInflater.inflate(R.layout.toilet_list_item, parent, false);
+        View mItemView = _inflater.inflate(R.layout.toilet_list_item, parent, false);
         return new ToiletViewHolder(mItemView, this);
     }
 
     @Override
     public void onBindViewHolder(ToiletViewHolder holder, int position) {
-        Toilet toilet = mToiletList.get(position);
-        holder.toiletIdTextView.setText(toilet.getId());
-        holder.toiletStateTextView.setText(toilet.getState().toString());
-        holder.toiletLocationTextView.setText(toilet.getLocation());
+        Toilet toilet = _toiletList.get(position);
+        holder._toiletIdTextView.setText(toilet.getId());
+        holder._toiletStateTextView.setText(toilet.getState().toString());
+        holder._toiletLocationTextView.setText(toilet.getLocation());
 
-        holder.toiletStateImageView.setImageLevel(getImageLevelFromToiletState(toilet.getState()));
+        holder._toiletStateImageView.setImageLevel(getImageLevelFromToiletState(toilet.getState()));
 
         String percentageText = "--";
         if (toilet.getState() == ToiletState.SUFFICIENT || toilet.getState() == ToiletState.INSUFFICIENT) {
             int percentage = (int) Math.round(toilet.getPercentage() * 100);
             percentageText = percentage + "%";
         }
-        holder.toiletPercentageTextView.setText(percentageText);
+        holder._toiletPercentageTextView.setText(percentageText);
 
-        if (!isEnabled) {
-            holder.toiletListItemDeleteCheckBox.setVisibility(View.GONE);
-            holder.toiletListItemView.setBackgroundColor(Color.TRANSPARENT);
+        if (!_isEnabled) {
+            holder._toiletListItemDeleteCheckBox.setVisibility(View.GONE);
+            holder._toiletListItemView.setBackgroundColor(Color.TRANSPARENT);
         }
     }
 
     @Override
     public int getItemCount() {
-        return mToiletList.size();
+        return _toiletList.size();
     }
 
     public int getImageLevelFromToiletState(ToiletState state) {
@@ -182,5 +181,9 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
             default:
                 return -1;
         }
+    }
+
+    public ArrayList<Toilet> getToiletList() {
+        return _toiletList;
     }
 }
