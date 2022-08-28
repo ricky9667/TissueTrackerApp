@@ -36,11 +36,10 @@ public class AddToiletActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, arrayList);
         _viewModel = new ToiletInfoViewModel(arrayList);
 
-        new BasicAsyncTask(() -> _viewModel.loadUndeployedIds(), () -> adapter.notifyDataSetChanged()).execute();
+        new BasicAsyncTask(() -> _viewModel.loadUndeployedIds(), adapter::notifyDataSetChanged).execute();
 
         toiletIdSpinner = findViewById(R.id.toiletIdSpinner);
         toiletIdSpinner.setAdapter(adapter);
-
         toiletLocationEditText = findViewById(R.id.toiletLocationEditText);
     }
 
