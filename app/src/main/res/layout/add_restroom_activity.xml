@@ -17,7 +17,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/restroomIdEditText"
         app:layout_constraintEnd_toEndOf="@+id/restroomLocationTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/restroomIdEditText" />
+        app:layout_constraintTop_toTopOf="@+id/restroomIdEditText"
+        android:visibility="gone"/>
 
     <EditText
         android:id="@+id/restroomIdEditText"
@@ -30,7 +31,8 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/restroomIdTextView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/restroomLocationTextView"
