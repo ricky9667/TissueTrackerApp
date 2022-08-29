@@ -21,4 +21,17 @@ public class RestroomInfoViewModel {
             e.printStackTrace();
         }
     }
+
+    public void updateRestroomLocation(int id, String location) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("restroomId", id);
+            jsonObject.put("location", location);
+
+            String response = _client.updateRestroomLocation(jsonObject.toString());
+            Log.d("updateRestroomLocation", response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

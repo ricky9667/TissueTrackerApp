@@ -16,6 +16,7 @@ import com.example.android.viewModel.RestroomsViewModel;
 public class MainActivity extends AppCompatActivity {
     private RestroomsViewModel _viewModel;
     private RecyclerView _restroomRecyclerView;
+    private static final String RESTROOM_INTENT_FLAG = "restroomIntentFlag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void addNewRestroom(View view) {
         Intent intent = new Intent(view.getContext(), AddRestroomActivity.class);
+        intent.putExtra(RESTROOM_INTENT_FLAG, "register");
+        startActivityForResult(intent, 1);
+    }
+
+    public void updateRestroomLocation(View view) {
+        Intent intent = new Intent(view.getContext(), AddRestroomActivity.class);
+        intent.putExtra(RESTROOM_INTENT_FLAG, "update");
         startActivityForResult(intent, 1);
     }
 }

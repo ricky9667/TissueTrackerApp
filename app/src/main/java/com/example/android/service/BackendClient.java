@@ -1,5 +1,7 @@
 package com.example.android.service;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.util.Objects;
 
@@ -43,6 +45,21 @@ public class BackendClient {
         Request request = new Request.Builder()
                 .url(_baseUrl + path)
                 .post(body)
+                .build();
+        try (Response response = _client.newCall(request).execute()) {
+            return Objects.requireNonNull(response.body()).string();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String updateRestroomLocation(String json) {
+        final String path = "/restroom";
+        RequestBody body = RequestBody.create(json, JSON);
+        Request request = new Request.Builder()
+                .url(_baseUrl + path)
+                .put(body)
                 .build();
         try (Response response = _client.newCall(request).execute()) {
             return Objects.requireNonNull(response.body()).string();
