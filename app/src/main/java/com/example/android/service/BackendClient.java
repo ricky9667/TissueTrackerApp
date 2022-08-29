@@ -41,6 +41,18 @@ public class BackendClient {
         }
     }
 
+    public String deleteRestroom(String json) {
+        final String path = "/restroom";
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder().url(_baseUrl + path).delete(body).build();
+        try (Response response = _client.newCall(request).execute()) {
+            return Objects.requireNonNull(response.body()).string();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public String fetchMultipleToilets(String json) {
         final String path = "/toilets";
         RequestBody body = RequestBody.create(JSON, json);
