@@ -1,5 +1,7 @@
 package com.example.android.viewModel;
 
+import android.util.Log;
+
 import com.example.android.model.Toilet;
 import com.example.android.service.BackendClient;
 
@@ -39,6 +41,19 @@ public class ToiletsViewModel {
                     e.printStackTrace();
                 }
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeToilet(String toiletId, String restroomId) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("toiletId", toiletId);
+            jsonObject.put("restroomId", restroomId);
+
+            String response = _client.removeToilet(jsonObject.toString());
+            Log.d("removeToilet", response);
         } catch (JSONException e) {
             e.printStackTrace();
         }

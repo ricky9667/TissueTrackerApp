@@ -19,6 +19,7 @@ import com.example.android.R;
 import com.example.android.model.Toilet;
 import com.example.android.model.ToiletState;
 import com.example.android.service.Store;
+import com.example.android.utils.BasicAsyncTask;
 
 import java.util.ArrayList;
 
@@ -37,7 +38,8 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
         private final ImageView _toiletStateImageView;
         private final ImageView _toiletListItemDeleteCheckBox;
         private final View _toiletListItemView;
-        final ToiletListAdapter mAdapter;
+        private ToiletsViewModel _viewModel;
+        final ToiletListAdapter _adapter;
 
         public ToiletViewHolder(View itemView, ToiletListAdapter adapter) {
             super(itemView);
@@ -49,7 +51,8 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
             _toiletListItemDeleteCheckBox = itemView.findViewById(R.id.toiletDeleteCheckCircle);
             _toiletListItemView = itemView;
 
-            this.mAdapter = adapter;
+            this._adapter = adapter;
+            _viewModel = new ToiletsViewModel(adapter);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
@@ -96,14 +99,20 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
                     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                         int id = item.getItemId();
                         int restroomIndex = _store.getShowingRestroomIndex();
+                        String restroomId = _store.getRestroom(restroomIndex).getId();
                         if (id == R.id.delete) {
                             for (int i = getItemCount() - 1; i >= 0; i--) {
                                 if (_selectedToiletList.contains(String.valueOf(i))) {
-                                    _store.deleteToilet(restroomIndex, i);
+                                    int toiletIndex = i;
+                                    String toiletId = _toiletList.get(toiletIndex).getId();
+                                    _store.deleteToilet(restroomIndex, toiletIndex);
+                                    new BasicAsyncTask(() -> _viewModel.removeToilet(toiletId, restroomId), () -> _adapter.notifyDataSetChanged()).execute();
                                 }
                             }
                             mode.finish();
+                            new BasicAsyncTask(() -> _viewModel.loadToiletsData(restroomId), () -> _adapter.notifyDataSetChanged()).execute();
                         }
+                        notifyDataSetChanged();
                         return true;
                     }
 
