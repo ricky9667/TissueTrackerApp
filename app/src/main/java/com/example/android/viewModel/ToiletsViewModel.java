@@ -4,6 +4,7 @@ import com.example.android.model.Toilet;
 import com.example.android.service.BackendClient;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -17,22 +18,29 @@ public class ToiletsViewModel {
     }
 
     public void loadToiletsData(String restroomId) {
-        String result = _client.fetchMultipleToilets(restroomId);
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("restroomId", restroomId);
 
-        if (result != null) {
-            try {
-                ArrayList<Toilet> toiletList = _toiletListAdapter.getToiletList();
-                _toiletListAdapter.getToiletList().clear();
-                JSONObject rootObject = new JSONObject(result);
-                JSONArray toiletArray = rootObject.getJSONArray("toilets");
-                for (int i = 0; i < toiletArray.length(); i++) {
-                    JSONObject toiletObject = toiletArray.getJSONObject(i);
-                    Toilet toilet = Toilet.fromJson(toiletObject);
-                    toiletList.add(toilet);
+            String result = _client.fetchMultipleToilets(jsonObject.toString());
+
+            if (result != null) {
+                try {
+                    ArrayList<Toilet> toiletList = _toiletListAdapter.getToiletList();
+                    _toiletListAdapter.getToiletList().clear();
+                    JSONObject rootObject = new JSONObject(result);
+                    JSONArray toiletArray = rootObject.getJSONArray("toilets");
+                    for (int i = 0; i < toiletArray.length(); i++) {
+                        JSONObject toiletObject = toiletArray.getJSONObject(i);
+                        Toilet toilet = Toilet.fromJson(toiletObject);
+                        toiletList.add(toilet);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }

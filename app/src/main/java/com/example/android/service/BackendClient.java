@@ -16,7 +16,8 @@ import okhttp3.Response;
 public class BackendClient {
     private static BackendClient instance = null;
     private final OkHttpClient _client;
-    private final String _baseUrl = "https://c4ee-2001-b011-4002-1050-d958-3e2b-344c-2667.jp.ngrok.io";
+    private final String _baseUrl = "https://c13c-2001-b011-4002-332b-d54f-476a-c61-9fe2.jp.ngrok.io";
+    MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     private BackendClient() {
         _client = new OkHttpClient();
@@ -40,13 +41,9 @@ public class BackendClient {
         }
     }
 
-    public String fetchMultipleToilets(String restroomId) {
+    public String fetchMultipleToilets(String json) {
         final String path = "/toilets";
-        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        Map<String, Object> data = new HashMap<String, Object>();
-        data.put("restroomId", restroomId);
-        JSONObject jsonObject = new JSONObject(data);
-        RequestBody body = RequestBody.create(JSON, jsonObject.toString());
+        RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder().url(_baseUrl + path).post(body).build();
         try (Response response = _client.newCall(request).execute()) {
             return Objects.requireNonNull(response.body()).string();
