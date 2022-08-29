@@ -8,7 +8,6 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.R;
-import com.example.android.model.Restroom;
 import com.example.android.service.Store;
 import com.example.android.utils.BasicAsyncTask;
 import com.example.android.viewModel.RestroomInfoViewModel;
@@ -16,14 +15,12 @@ import com.example.android.viewModel.RestroomInfoViewModel;
 public class AddRestroomActivity extends AppCompatActivity {
     private RestroomInfoViewModel _viewModel;
     private final Store store = Store.getInstance();
-    private EditText restroomIdEditText;
     private EditText restroomLocationEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_restroom_activity);
-        restroomIdEditText = findViewById(R.id.restroomIdEditText);
         restroomLocationEditText = findViewById(R.id.restroomLocationEditText);
 
         _viewModel = new RestroomInfoViewModel();
@@ -31,9 +28,7 @@ public class AddRestroomActivity extends AppCompatActivity {
 
     public void submitNewRestroom(View view) {
         Intent replyIntent = new Intent();
-//        final String restroomId = restroomIdEditText.getText().toString();
         final String restroomLocation = restroomLocationEditText.getText().toString();
-//        store.addRestroom(new Restroom(restroomId, restroomLocation));
 
         final Runnable backgroundTask = () -> _viewModel.registerRestroom(restroomLocation);
         new BasicAsyncTask(backgroundTask, null).execute();

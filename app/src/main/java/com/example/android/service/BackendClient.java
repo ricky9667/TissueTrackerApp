@@ -38,7 +38,7 @@ public class BackendClient {
     }
 
     public String registerRestroom(String json) {
-        final String path = "/toilet";
+        final String path = "/restroom";
         RequestBody body = RequestBody.create(json, JSON);
         Request request = new Request.Builder()
                 .url(_baseUrl + path)
