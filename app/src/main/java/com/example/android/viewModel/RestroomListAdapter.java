@@ -99,14 +99,16 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
                         if (id == R.id.delete) {
                             for (int i = getItemCount() - 1; i >= 0; i--) {
                                 if (_selectedRestroomList.contains(String.valueOf(i))) {
-                                    _restroomList.remove(i);
                                     int index = i;
-                                    new BasicAsyncTask(() -> _viewModel.deleteRestroom(_restroomList.get(index).getId()), () -> _adapter.notifyDataSetChanged()).execute();
+                                    String restroomId = _restroomList.get(index).getId();
+                                    _store.deleteRestroom(index);
+                                    new BasicAsyncTask(() -> _viewModel.deleteRestroom(restroomId), () -> _adapter.notifyDataSetChanged()).execute();
                                 }
                             }
                             mode.finish();
                             new BasicAsyncTask(() -> _viewModel.loadRestroomsData(), () -> _adapter.notifyDataSetChanged()).execute();
                         }
+                        notifyDataSetChanged();
                         return true;
                     }
 
