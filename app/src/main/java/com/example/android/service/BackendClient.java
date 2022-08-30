@@ -14,7 +14,7 @@ import okhttp3.Response;
 public class BackendClient {
     private static BackendClient instance = null;
     private final OkHttpClient _client;
-    private final String _baseUrl = "https://b8dd-2001-b011-2019-1f37-8887-981f-8320-7ad5.jp.ngrok.io";
+    private final String _baseUrl = "https://f942-220-135-128-111.jp.ngrok.io";
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
     private BackendClient() {
