@@ -39,7 +39,6 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
         private RestroomsViewModel _viewModel;
         final RestroomListAdapter _adapter;
 
-
         public RestroomViewHolder(View itemView, RestroomListAdapter adapter) {
             super(itemView);
             _restroomListItemTitleView = itemView.findViewById(R.id.restroomListItemTitle);
@@ -102,11 +101,13 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
                                     int index = i;
                                     String restroomId = _restroomList.get(index).getId();
                                     _store.deleteRestroom(index);
-                                    new BasicAsyncTask(() -> _viewModel.deleteRestroom(restroomId), () -> _adapter.notifyDataSetChanged()).execute();
+                                    final Runnable backgroundTask = () -> _viewModel.deleteRestroom(restroomId);
+                                    new BasicAsyncTask(backgroundTask, _adapter::notifyDataSetChanged).execute();
                                 }
                             }
                             mode.finish();
-                            new BasicAsyncTask(() -> _viewModel.loadRestroomsData(), () -> _adapter.notifyDataSetChanged()).execute();
+                            final Runnable backgroundTask = () -> _viewModel.loadRestroomsData();
+                            new BasicAsyncTask(backgroundTask, _adapter::notifyDataSetChanged).execute();
                         }
                         notifyDataSetChanged();
                         return true;

@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
         _restroomRecyclerView.setAdapter(adapter);
         _restroomRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        new BasicAsyncTask(() -> _viewModel.loadRestroomsData(), () -> adapter.notifyDataSetChanged()).execute();
+        final Runnable backgroundTask = () -> _viewModel.loadRestroomsData();
+        new BasicAsyncTask(backgroundTask, adapter::notifyDataSetChanged).execute();
     }
 
     @Override

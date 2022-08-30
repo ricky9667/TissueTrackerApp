@@ -106,11 +106,13 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
                                     int toiletIndex = i;
                                     String toiletId = _toiletList.get(toiletIndex).getId();
                                     _store.deleteToilet(restroomIndex, toiletIndex);
-                                    new BasicAsyncTask(() -> _viewModel.removeToilet(toiletId, restroomId), () -> _adapter.notifyDataSetChanged()).execute();
+                                    final Runnable backgroundTask = () -> _viewModel.removeToilet(toiletId, restroomId);
+                                    new BasicAsyncTask(backgroundTask, _adapter::notifyDataSetChanged).execute();
                                 }
                             }
                             mode.finish();
-                            new BasicAsyncTask(() -> _viewModel.loadToiletsData(restroomId), () -> _adapter.notifyDataSetChanged()).execute();
+                            final Runnable backgroundTask = () -> _viewModel.loadToiletsData(restroomId);
+                            new BasicAsyncTask(backgroundTask, _adapter::notifyDataSetChanged).execute();
                         }
                         notifyDataSetChanged();
                         return true;

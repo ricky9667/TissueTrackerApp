@@ -39,7 +39,8 @@ public class ToiletActivity extends AppCompatActivity {
         _toiletRecyclerView.setAdapter(adapter);
         _toiletRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        new BasicAsyncTask(() -> _viewModel.loadToiletsData(_restroom.getId()), () -> adapter.notifyDataSetChanged()).execute();
+        final Runnable backgroundTask = () -> _viewModel.loadToiletsData(_restroom.getId());
+        new BasicAsyncTask(backgroundTask, adapter::notifyDataSetChanged).execute();
     }
 
     @Override
