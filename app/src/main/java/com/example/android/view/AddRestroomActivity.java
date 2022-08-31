@@ -26,9 +26,9 @@ public class AddRestroomActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String restroomIntentFlag = intent.getStringExtra(RESTROOM_INTENT_FLAG);
-        if(restroomIntentFlag.equals("register")){
+        if (restroomIntentFlag.equals("register")) {
             setContentView(R.layout.add_restroom_activity);
-        }else if(restroomIntentFlag.equals("update")){
+        } else if (restroomIntentFlag.equals("update")) {
             setContentView(R.layout.update_restroom_activity);
             restroomIdEditText = findViewById(R.id.restroomIdEditText);
         }

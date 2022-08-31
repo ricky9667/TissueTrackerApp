@@ -22,7 +22,7 @@ public class BasicAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void unused) {
         super.onPostExecute(unused);
-        if(_postExecute != null){
+        if (_postExecute != null) {
             _postExecute.run();
         }
     }
