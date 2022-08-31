@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
         _restroomRecyclerView.setAdapter(_adapter);
         _restroomRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        new BasicAsyncTask(() -> _viewModel.loadRestroomsData(), _adapter::notifyDataSetChanged).execute();
+        final Runnable backgroundTask = () -> _viewModel.loadRestroomsData();
+        new BasicAsyncTask(backgroundTask, _adapter::notifyDataSetChanged).execute();
     }
 
     @Override
@@ -40,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                new BasicAsyncTask(() -> _viewModel.loadRestroomsData(), _adapter::notifyDataSetChanged).execute();
+                final Runnable backgroundTask = () -> _viewModel.loadRestroomsData();
+                new BasicAsyncTask(backgroundTask, _adapter::notifyDataSetChanged).execute();
             }
         }
     }
