@@ -15,7 +15,7 @@ public class BackendClient {
     private static BackendClient instance = null;
     private final OkHttpClient _client;
     private final String _baseUrl = "https://f942-220-135-128-111.jp.ngrok.io";
-    public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+    private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
     private BackendClient() {
         _client = new OkHttpClient();
