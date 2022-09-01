@@ -38,8 +38,8 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
         private final ImageView _toiletStateImageView;
         private final ImageView _toiletListItemDeleteCheckBox;
         private final View _toiletListItemView;
-        private ToiletsViewModel _viewModel;
-        final ToiletListAdapter _adapter;
+        private final ToiletsViewModel _viewModel;
+        private final ToiletListAdapter _adapter;
 
         public ToiletViewHolder(View itemView, ToiletListAdapter adapter) {
             super(itemView);

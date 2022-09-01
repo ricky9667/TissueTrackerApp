@@ -36,8 +36,8 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
         private final TextView _restroomListItemContentView;
         private final ImageView _restroomListItemDeleteCheckBox;
         private final View _restroomListItemView;
-        private RestroomsViewModel _viewModel;
-        final RestroomListAdapter _adapter;
+        private final RestroomsViewModel _viewModel;
+        private final RestroomListAdapter _adapter;
 
         public RestroomViewHolder(View itemView, RestroomListAdapter adapter) {
             super(itemView);
