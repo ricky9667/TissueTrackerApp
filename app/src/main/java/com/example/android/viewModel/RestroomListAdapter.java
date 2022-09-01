@@ -31,7 +31,7 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
     private boolean _isEnabled = false;
 
     class RestroomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        private final Store _store = Store.getInstance();
+        private final Store _store = Store.getInstance(); // TODO: remove after all branches have been merge
         private final TextView _restroomListItemTitleView;
         private final TextView _restroomListItemContentView;
         private final ImageView _restroomListItemDeleteCheckBox;

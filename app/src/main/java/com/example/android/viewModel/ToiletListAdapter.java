@@ -30,7 +30,7 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
     private boolean _isEnabled = false;
 
     class ToiletViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        private final Store _store = Store.getInstance();
+        private final Store _store = Store.getInstance(); // TODO: remove after all branches have been merge
         private final TextView _toiletIdTextView;
         private final TextView _toiletLocationTextView;
         private final TextView _toiletPercentageTextView;
