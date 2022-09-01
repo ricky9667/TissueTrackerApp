@@ -1,10 +1,6 @@
 package com.example.android.service;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import okhttp3.MediaType;
@@ -16,7 +12,7 @@ import okhttp3.Response;
 public class BackendClient {
     private static BackendClient instance = null;
     private final OkHttpClient _client;
-    private final String _baseUrl = "https://2f43-2001-b011-4002-332b-1074-bb39-423b-aa5f.jp.ngrok.io";
+    private final String _baseUrl = "https://bb96-2001-b011-4002-3aed-40e2-f320-133b-8c38.jp.ngrok.io";
     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     private BackendClient() {
