@@ -9,35 +9,38 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.R;
+import com.example.android.utils.BasicAsyncTask;
 import com.example.android.viewModel.ToiletListAdapter;
 import com.example.android.model.Restroom;
 import com.example.android.service.Store;
+import com.example.android.viewModel.ToiletsViewModel;
 
 public class ToiletActivity extends AppCompatActivity {
-    private final Store store = Store.getInstance();
-    private Restroom restroom = null;
-    private RecyclerView mRecyclerView;
+    private final Store _store = Store.getInstance();  // TODO: remove after all branches have been merge
+    private ToiletsViewModel _viewModel;
+    private Restroom _restroom = null;
+    private RecyclerView _toiletRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.toilet_activity);
 
-        int restroomIndex = store.getShowingRestroomIndex();
+        int restroomIndex = _store.getShowingRestroomIndex();
         if (restroomIndex != -1) {
-            restroom = store.getRestroom(restroomIndex);
-            setTitle(restroom.getLocation());
+            _restroom = _store.getRestroom(restroomIndex);
+            setTitle(_restroom.getLocation());
         }
 
-        ToiletListAdapter mAdapter = new ToiletListAdapter(this, restroom.getToiletList());
-        mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
+        ToiletListAdapter adapter = new ToiletListAdapter(this);
+        _viewModel = new ToiletsViewModel(adapter);
 
-    public void addNewToilet(View view) {
-        Intent intent = new Intent(view.getContext(), AddToiletActivity.class);
-        startActivityForResult(intent, 1);
+        _toiletRecyclerView = findViewById(R.id.toiletRecyclerView);
+        _toiletRecyclerView.setAdapter(adapter);
+        _toiletRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        final Runnable backgroundTask = () -> _viewModel.loadToiletsData(_restroom.getId());
+        new BasicAsyncTask(backgroundTask, adapter::notifyDataSetChanged).execute();
     }
 
     @Override
@@ -45,8 +48,13 @@ public class ToiletActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                mRecyclerView.getAdapter().notifyDataSetChanged();
+                _toiletRecyclerView.getAdapter().notifyDataSetChanged();
             }
         }
+    }
+
+    public void addNewToilet(View view) {
+        Intent intent = new Intent(view.getContext(), AddToiletActivity.class);
+        startActivityForResult(intent, 1);
     }
 }

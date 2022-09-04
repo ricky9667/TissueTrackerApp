@@ -55,7 +55,7 @@ public class AddToiletActivity extends AppCompatActivity {
         }
 
         int restroomIndex = store.getShowingRestroomIndex();
-        store.addToilet(restroomIndex, new Toilet(toiletId, toiletLocation, toiletState, percentage));
+        store.addToilet(restroomIndex, new Toilet(toiletId, percentage, 0, 0, toiletLocation, toiletState));
         setResult(RESULT_OK, replyIntent);
         finish();
     }
