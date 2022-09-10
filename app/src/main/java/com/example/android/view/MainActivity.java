@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
         _adapter = new RestroomListAdapter(this);
         _viewModel = new RestroomsViewModel(_adapter);
 
-        _restroomRecyclerView = findViewById(R.id.recyclerView);
+
+        _restroomRecyclerView = findViewById(R.id.restroomRecyclerView);
         _restroomRecyclerView.setAdapter(_adapter);
         _restroomRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

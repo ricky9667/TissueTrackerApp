@@ -3,59 +3,52 @@ package com.example.android.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.SeekBar;
-import android.widget.TextView;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.R;
-import com.example.android.model.Toilet;
 import com.example.android.model.ToiletState;
-import com.example.android.service.Store;
+import com.example.android.utils.BasicAsyncTask;
+import com.example.android.viewModel.ToiletInfoViewModel;
+
+import java.util.ArrayList;
 
 public class AddToiletActivity extends AppCompatActivity {
-    private final Store store = Store.getInstance();
-    private EditText toiletIdEditText;
-    private EditText toiletLocationEditText;
-    private TextView tissueAmountTextView;
-    private SeekBar tissueAmountSeekBar;
+    private ToiletInfoViewModel _viewModel;
+    private Spinner _toiletIdSpinner;
+    private EditText _toiletLocationEditText;
     private ToiletState toiletState = ToiletState.SUFFICIENT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_toilet_activity);
-        toiletIdEditText = findViewById(R.id.toiletIdEditText);
-        toiletLocationEditText = findViewById(R.id.toiletLocationEditText);
-        tissueAmountTextView = findViewById(R.id.tissueAmountTextView);
-        tissueAmountSeekBar = findViewById(R.id.tissueAmountSeekBar);
-        tissueAmountSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                tissueAmountTextView.setText("Tissue amount: " + i + "%");
-            }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+        ArrayList<String> arrayList = new ArrayList<>();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, arrayList);
+        _viewModel = new ToiletInfoViewModel(arrayList);
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-        });
+        final Runnable backgroundTask = () -> _viewModel.loadUndeployedIds();
+        new BasicAsyncTask(backgroundTask, adapter::notifyDataSetChanged).execute();
+
+        _toiletIdSpinner = findViewById(R.id.toiletIdSpinner);
+        _toiletIdSpinner.setAdapter(adapter);
+        _toiletLocationEditText = findViewById(R.id.toiletLocationEditText);
     }
 
     public void submitNewToilet(View view) {
         Intent replyIntent = new Intent();
-        final String toiletId = toiletIdEditText.getText().toString();
-        final String toiletLocation = toiletLocationEditText.getText().toString();
-        final double percentage = tissueAmountSeekBar.getProgress() / 100.0f;
 
-        if (toiletState == ToiletState.SUFFICIENT) {
-            toiletState = percentage >= 0.1f ? ToiletState.SUFFICIENT : ToiletState.INSUFFICIENT;
-        }
+        final String restroomId = "1"; // TODO: should replace with real restroomId from ToiletActivity
+        final String toiletId = _toiletIdSpinner.getSelectedItem().toString();
+        final String toiletLocation = _toiletLocationEditText.getText().toString();
 
-        int restroomIndex = store.getShowingRestroomIndex();
-        store.addToilet(restroomIndex, new Toilet(toiletId, toiletLocation, toiletState, percentage));
+        final Runnable backgroundTask = () -> _viewModel.registerToilet(restroomId, toiletId, toiletLocation);
+        new BasicAsyncTask(backgroundTask, null).execute();
+
         setResult(RESULT_OK, replyIntent);
         finish();
     }
