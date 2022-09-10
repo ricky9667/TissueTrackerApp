@@ -12,7 +12,7 @@ import okhttp3.Response;
 public class BackendClient {
     private static BackendClient instance = null;
     private final OkHttpClient _client;
-    private final String _baseUrl = "https://bb96-2001-b011-4002-3aed-40e2-f320-133b-8c38.jp.ngrok.io";
+    private final String _baseUrl = "https://eb23-61-61-239-114.jp.ngrok.io";
     private final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     private BackendClient() {
@@ -37,10 +37,36 @@ public class BackendClient {
         }
     }
 
+    public String fetchUndeployedToiletIds() {
+        final String path = "/undeployedToiletIds";
+        Request request = new Request.Builder().url(_baseUrl + path).build();
+        try (Response response = _client.newCall(request).execute()) {
+            return Objects.requireNonNull(response.body()).string();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public String deleteRestroom(String json) {
         final String path = "/restroom";
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder().url(_baseUrl + path).delete(body).build();
+        try (Response response = _client.newCall(request).execute()) {
+            return Objects.requireNonNull(response.body()).string();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String registerToilet(String json) {
+        final String path = "/toilet";
+        RequestBody body = RequestBody.create(json, JSON);
+        Request request = new Request.Builder()
+                .url(_baseUrl + path)
+                .post(body)
+                .build();
         try (Response response = _client.newCall(request).execute()) {
             return Objects.requireNonNull(response.body()).string();
         } catch (IOException e) {
