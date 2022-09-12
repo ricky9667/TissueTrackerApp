@@ -34,4 +34,5 @@ public class RestroomInfoViewModel {
             e.printStackTrace();
         }
     }
+
 }

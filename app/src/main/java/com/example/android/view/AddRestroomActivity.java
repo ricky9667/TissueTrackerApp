@@ -2,7 +2,6 @@ package com.example.android.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -15,7 +14,6 @@ import com.example.android.viewModel.RestroomInfoViewModel;
 
 public class AddRestroomActivity extends AppCompatActivity {
     private RestroomInfoViewModel _viewModel;
-    private final Store store = Store.getInstance();
     private EditText restroomIdEditText;
     private EditText restroomLocationEditText;
     private static final String RESTROOM_INTENT_FLAG = "restroomIntentFlag";
@@ -52,7 +50,7 @@ public class AddRestroomActivity extends AppCompatActivity {
         Intent replyIntent = new Intent();
         final String restroomIdText = restroomIdEditText.getText().toString();
         final String restroomLocation = restroomLocationEditText.getText().toString();
-        int restroomId = Integer.parseInt(restroomIdText);
+        final int restroomId = Integer.parseInt(restroomIdText);
 
         final Runnable backgroundTask = () -> _viewModel.updateRestroomLocation(restroomId, restroomLocation);
         new BasicAsyncTask(backgroundTask, null).execute();

@@ -18,7 +18,6 @@ import com.example.android.viewModel.ToiletsViewModel;
 public class ToiletActivity extends AppCompatActivity {
     private final String RESTROOM_ID_EXTRA = "restroomIdExtra";
     private final String RESTROOM_LOCATION_EXTRA = "restroomLocationExtra";
-    private final Store _store = Store.getInstance();  // TODO: remove after all branches have been merge
     private ToiletsViewModel _viewModel;
     private Restroom _restroom = null;
     private RecyclerView _toiletRecyclerView;
