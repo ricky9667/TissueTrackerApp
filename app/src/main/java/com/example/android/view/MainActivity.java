@@ -16,21 +16,24 @@ import com.example.android.viewModel.RestroomsViewModel;
 public class MainActivity extends AppCompatActivity {
     private RestroomsViewModel _viewModel;
     private RecyclerView _restroomRecyclerView;
+    private static final String RESTROOM_INTENT_FLAG = "restroomIntentFlag";
+    private RestroomListAdapter _adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RestroomListAdapter adapter = new RestroomListAdapter(this);
-        _viewModel = new RestroomsViewModel(adapter);
+        _adapter = new RestroomListAdapter(this);
+        _viewModel = new RestroomsViewModel(_adapter);
+
 
         _restroomRecyclerView = findViewById(R.id.restroomRecyclerView);
-        _restroomRecyclerView.setAdapter(adapter);
+        _restroomRecyclerView.setAdapter(_adapter);
         _restroomRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         final Runnable backgroundTask = () -> _viewModel.loadRestroomsData();
-        new BasicAsyncTask(backgroundTask, adapter::notifyDataSetChanged).execute();
+        new BasicAsyncTask(backgroundTask, _adapter::notifyDataSetChanged).execute();
     }
 
     @Override
@@ -38,13 +41,21 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                _restroomRecyclerView.getAdapter().notifyDataSetChanged();
+                final Runnable backgroundTask = () -> _viewModel.loadRestroomsData();
+                new BasicAsyncTask(backgroundTask, _adapter::notifyDataSetChanged).execute();
             }
         }
     }
 
     public void addNewRestroom(View view) {
         Intent intent = new Intent(view.getContext(), AddRestroomActivity.class);
+        intent.putExtra(RESTROOM_INTENT_FLAG, "register");
+        startActivityForResult(intent, 1);
+    }
+
+    public void updateRestroomLocation(View view) {
+        Intent intent = new Intent(view.getContext(), AddRestroomActivity.class);
+        intent.putExtra(RESTROOM_INTENT_FLAG, "update");
         startActivityForResult(intent, 1);
     }
 }
