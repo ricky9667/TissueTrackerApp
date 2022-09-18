@@ -27,27 +27,7 @@ public class Restroom {
         return _id;
     }
 
-    public void setId(String id) {
-        _id = id;
-    }
-
     public String getLocation() {
         return _location;
-    }
-
-    public void setLocation(String location) {
-        _location = location;
-    }
-
-    public ArrayList<Toilet> getToiletList() {
-        return _toiletList;
-    }
-
-    public void addToilet(Toilet toilet) {
-        _toiletList.add(toilet);
-    }
-
-    public void deleteToilet(int position) {
-        _toiletList.remove(position);
     }
 }

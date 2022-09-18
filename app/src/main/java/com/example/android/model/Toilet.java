@@ -3,7 +3,7 @@ package com.example.android.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Toilet{
+public class Toilet {
     private String _id;
     private double _percentage; // percentage of tissue amount
     private double _distance;
