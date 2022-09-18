@@ -25,9 +25,6 @@ import com.example.android.service.Store;
 import java.util.ArrayList;
 
 public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapter.RestroomViewHolder> {
-    private final String RESTROOM_ID_EXTRA = "restroomIdExtra";
-    private final String RESTROOM_LOCATION_EXTRA = "restroomLocationExtra";
-
     private final LayoutInflater _inflater;
     private final ArrayList<Restroom> _restroomList = new ArrayList<>();
     private final ArrayList<String> _selectedRestroomList = new ArrayList<>();
@@ -69,8 +66,8 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
                 }
             } else {
                 Intent intent = new Intent(view.getContext(), ToiletActivity.class);
-                intent.putExtra(RESTROOM_ID_EXTRA, _restroomList.get(position).getId());
-                intent.putExtra(RESTROOM_LOCATION_EXTRA, _restroomList.get(position).getLocation());
+                intent.putExtra("restroomId", _restroomList.get(position).getId());
+                intent.putExtra("restroomLocation", _restroomList.get(position).getLocation());
                 view.getContext().startActivity(intent);
             }
         }

@@ -11,36 +11,33 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.android.R;
 import com.example.android.utils.BasicAsyncTask;
 import com.example.android.viewModel.ToiletListAdapter;
-import com.example.android.model.Restroom;
-import com.example.android.service.Store;
 import com.example.android.viewModel.ToiletsViewModel;
 
 public class ToiletActivity extends AppCompatActivity {
-    private final String RESTROOM_ID_EXTRA = "restroomIdExtra";
-    private final String RESTROOM_LOCATION_EXTRA = "restroomLocationExtra";
     private ToiletsViewModel _viewModel;
-    private Restroom _restroom = null;
-    private RecyclerView _toiletRecyclerView;
+    private ToiletListAdapter _adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.toilet_activity);
-        String restroomId = getIntent().getStringExtra(RESTROOM_ID_EXTRA);
-        String restroomLocationTitle = getIntent().getStringExtra(RESTROOM_LOCATION_EXTRA);
-        setTitle(restroomLocationTitle);
+        String restroomId = getIntent().getStringExtra("restroomId");
+        String restroomLocation = getIntent().getStringExtra("restroomLocation");
 
-        if (!restroomId.equals("")){
-            _restroom = new Restroom(restroomId, restroomLocationTitle);
-            ToiletListAdapter adapter = new ToiletListAdapter(this);
-            _viewModel = new ToiletsViewModel(adapter);
+        if (restroomId != null) {
+            _adapter = new ToiletListAdapter(this);
+            _viewModel = new ToiletsViewModel(_adapter);
 
-            _toiletRecyclerView = findViewById(R.id.toiletRecyclerView);
-            _toiletRecyclerView.setAdapter(adapter);
-            _toiletRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            RecyclerView toiletRecyclerView = findViewById(R.id.toiletRecyclerView);
+            toiletRecyclerView.setAdapter(_adapter);
+            toiletRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-            final Runnable backgroundTask = () -> _viewModel.loadToiletsData(_restroom.getId());
-            new BasicAsyncTask(backgroundTask, adapter::notifyDataSetChanged).execute();
+            final Runnable backgroundTask = () -> _viewModel.loadToiletsData(restroomId);
+            new BasicAsyncTask(backgroundTask, _adapter::notifyDataSetChanged).execute();
+        }
+
+        if (restroomId != null) {
+            setTitle(restroomLocation);
         }
     }
 
@@ -49,7 +46,7 @@ public class ToiletActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                _toiletRecyclerView.getAdapter().notifyDataSetChanged();
+                _adapter.notifyDataSetChanged();
             }
         }
     }
