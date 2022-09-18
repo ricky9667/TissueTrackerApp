@@ -17,6 +17,7 @@ public class RestroomsViewModel {
 
     public RestroomsViewModel(RestroomListAdapter adapter) {
         _restroomListAdapter = adapter;
+        _restroomListAdapter.setViewModel(this);
     }
 
     public void loadRestroomsData() {

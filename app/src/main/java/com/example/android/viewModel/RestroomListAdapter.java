@@ -27,14 +27,15 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
     private final LayoutInflater _inflater;
     private final ArrayList<Restroom> _restroomList = new ArrayList<>();
     private final ArrayList<String> _selectedRestroomList = new ArrayList<>();
+    private RestroomsViewModel _viewModel;
     private boolean _isEnabled = false;
+
 
     class RestroomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private final TextView _restroomListItemTitleView;
         private final TextView _restroomListItemContentView;
         private final ImageView _restroomListItemDeleteCheckBox;
         private final View _restroomListItemView;
-        private final RestroomsViewModel _viewModel;
         private final RestroomListAdapter _adapter;
 
         public RestroomViewHolder(View itemView, RestroomListAdapter adapter) {
@@ -43,8 +44,7 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
             _restroomListItemContentView = itemView.findViewById(R.id.restroomListItemContent);
             _restroomListItemDeleteCheckBox = itemView.findViewById(R.id.restroomDeleteCheckCircle);
             _restroomListItemView = itemView;
-            this._adapter = adapter;
-            _viewModel = new RestroomsViewModel(adapter);
+            _adapter = adapter;
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
@@ -136,6 +136,10 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
 
     public RestroomListAdapter(Context context) {
         _inflater = LayoutInflater.from(context);
+    }
+
+    public void setViewModel(RestroomsViewModel viewModel) {
+        _viewModel = viewModel;
     }
 
     @Override
