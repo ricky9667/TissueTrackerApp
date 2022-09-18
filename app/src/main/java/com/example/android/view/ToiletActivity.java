@@ -15,8 +15,6 @@ import com.example.android.viewModel.ToiletsViewModel;
 
 public class ToiletActivity extends AppCompatActivity {
     private ToiletsViewModel _viewModel;
-    private String _restroomId;
-    private String _restroomLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,30 +36,30 @@ public class ToiletActivity extends AppCompatActivity {
 
     private void initActivityInformation() {
         Intent intent = getIntent();
-        _restroomId = intent.getStringExtra("restroomId");
-        _restroomLocation = intent.getStringExtra("restroomLocation");
+        String restroomId = intent.getStringExtra("restroomId");
+        String restroomLocation = intent.getStringExtra("restroomLocation");
 
-        if (_restroomId != null) {
-            ToiletListAdapter _adapter = new ToiletListAdapter(this);
-            _viewModel = new ToiletsViewModel(_adapter);
+        if (restroomId != null && restroomLocation != null) {
+            setTitle(restroomLocation);
+
+            ToiletListAdapter adapter = new ToiletListAdapter(this);
+            _viewModel = new ToiletsViewModel(restroomId, restroomLocation, adapter);
 
             RecyclerView toiletRecyclerView = findViewById(R.id.toiletRecyclerView);
-            toiletRecyclerView.setAdapter(_adapter);
+            toiletRecyclerView.setAdapter(adapter);
             toiletRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-            final Runnable backgroundTask = () -> _viewModel.loadToiletsData(_restroomId);
-            new BasicAsyncTask(backgroundTask, _adapter::notifyDataSetChanged).execute();
+            final Runnable backgroundTask = () -> _viewModel.loadToiletsData();
+            new BasicAsyncTask(backgroundTask, adapter::notifyDataSetChanged).execute();
         }
 
-        if (_restroomLocation != null) {
-            setTitle(_restroomLocation);
-        }
+
     }
 
     public void addNewToilet(View view) {
         Intent intent = new Intent(view.getContext(), AddToiletActivity.class);
-        intent.putExtra("restroomId", _restroomId);
-        intent.putExtra("restroomLocation", _restroomLocation);
+        intent.putExtra("restroomId", _viewModel.getRestroomId());
+        intent.putExtra("restroomLocation", _viewModel.getRestroomLocation());
         startActivityForResult(intent, 1);
     }
 }
