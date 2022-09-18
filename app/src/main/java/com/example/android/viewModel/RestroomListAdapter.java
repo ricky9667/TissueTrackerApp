@@ -20,7 +20,6 @@ import com.example.android.R;
 import com.example.android.utils.BasicAsyncTask;
 import com.example.android.view.ToiletActivity;
 import com.example.android.model.Restroom;
-import com.example.android.service.Store;
 
 import java.util.ArrayList;
 
@@ -31,7 +30,6 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
     private boolean _isEnabled = false;
 
     class RestroomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        private final Store _store = Store.getInstance(); // TODO: remove after all branches have been merge
         private final TextView _restroomListItemTitleView;
         private final TextView _restroomListItemContentView;
         private final ImageView _restroomListItemDeleteCheckBox;
@@ -97,11 +95,10 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
                     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                         int id = item.getItemId();
                         if (id == R.id.delete) {
-                            for (int i = getItemCount() - 1; i >= 0; i--) {
-                                if (_selectedRestroomList.contains(String.valueOf(i))) {
-                                    int index = i;
-                                    String restroomId = _restroomList.get(index).getId();
-                                    _store.deleteRestroom(index);
+                            for (int index = getItemCount() - 1; index >= 0; index--) {
+                                if (_selectedRestroomList.contains(String.valueOf(index))) {
+                                    int deleteIndex = index;
+                                    String restroomId = _restroomList.get(deleteIndex).getId();
                                     final Runnable backgroundTask = () -> _viewModel.deleteRestroom(restroomId);
                                     new BasicAsyncTask(backgroundTask, _adapter::notifyDataSetChanged).execute();
                                 }

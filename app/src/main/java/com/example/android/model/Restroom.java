@@ -3,17 +3,13 @@ package com.example.android.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
-public class Restroom extends ArrayList<Toilet> {
-    private String _id;
-    private String _location;
-    private final ArrayList<Toilet> _toiletList; // TODO: remove after data is all fetched from backend
+public class Restroom {
+    private final String _id;
+    private final String _location;
 
     public Restroom(String id, String location) {
         _id = id;
         _location = location;
-        _toiletList = new ArrayList<>();
     }
 
     public static Restroom fromJson(JSONObject restroomObject) {
