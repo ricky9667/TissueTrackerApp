@@ -12,13 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.R;
 import com.example.android.model.Toilet;
 import com.example.android.model.ToiletState;
-import com.example.android.service.Store;
 import com.example.android.utils.BasicAsyncTask;
 
 import java.util.ArrayList;
@@ -27,10 +27,10 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
     private final ArrayList<Toilet> _toiletList = new ArrayList<>();
     private final LayoutInflater _inflater;
     private final ArrayList<String> _selectedToiletList = new ArrayList<>();
+    private ToiletsViewModel _viewModel;
     private boolean _isEnabled = false;
 
     class ToiletViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        private final Store _store = Store.getInstance(); // TODO: remove after all branches have been merge
         private final TextView _toiletIdTextView;
         private final TextView _toiletLocationTextView;
         private final TextView _toiletPercentageTextView;
@@ -38,8 +38,8 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
         private final ImageView _toiletStateImageView;
         private final ImageView _toiletListItemDeleteCheckBox;
         private final View _toiletListItemView;
-        private final ToiletsViewModel _viewModel;
         private final ToiletListAdapter _adapter;
+
 
         public ToiletViewHolder(View itemView, ToiletListAdapter adapter) {
             super(itemView);
@@ -51,11 +51,11 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
             _toiletListItemDeleteCheckBox = itemView.findViewById(R.id.toiletDeleteCheckCircle);
             _toiletListItemView = itemView;
 
-            this._adapter = adapter;
-            _viewModel = new ToiletsViewModel(adapter);
+            _adapter = adapter;
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
+
 
         @Override
         public void onClick(View view) {
@@ -98,20 +98,21 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
                     @Override
                     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                         int id = item.getItemId();
-                        int restroomIndex = _store.getShowingRestroomIndex();
-                        String restroomId = _store.getRestroom(restroomIndex).getId();
+
                         if (id == R.id.delete) {
-                            for (int i = getItemCount() - 1; i >= 0; i--) {
-                                if (_selectedToiletList.contains(String.valueOf(i))) {
-                                    int toiletIndex = i;
-                                    String toiletId = _toiletList.get(toiletIndex).getId();
-                                    _store.deleteToilet(restroomIndex, toiletIndex);
-                                    final Runnable backgroundTask = () -> _viewModel.removeToilet(toiletId, restroomId);
+                            for (int index = getItemCount() - 1; index >= 0; index--) {
+                                if (_selectedToiletList.contains(String.valueOf(index))) {
+                                    int deleteIndex = index;
+                                    String toiletId = _toiletList.get(deleteIndex).getId();
+                                    System.out.println("[ToiletViewHolder] restroomId = " + _viewModel.getRestroomId());
+                                    System.out.println("[ToiletViewHolder] toiletId = " + toiletId);
+                                    final Runnable backgroundTask = () -> _viewModel.removeToilet(toiletId);
                                     new BasicAsyncTask(backgroundTask, _adapter::notifyDataSetChanged).execute();
                                 }
                             }
                             mode.finish();
-                            final Runnable backgroundTask = () -> _viewModel.loadToiletsData(restroomId);
+
+                            final Runnable backgroundTask = () -> _viewModel.loadToiletsData();
                             new BasicAsyncTask(backgroundTask, _adapter::notifyDataSetChanged).execute();
                         }
                         notifyDataSetChanged();
@@ -145,6 +146,11 @@ public class ToiletListAdapter extends RecyclerView.Adapter<ToiletListAdapter.To
         _inflater = LayoutInflater.from(context);
     }
 
+    public void setViewModel(ToiletsViewModel viewModel) {
+        _viewModel = viewModel;
+    }
+
+    @NonNull
     @Override
     public ToiletViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mItemView = _inflater.inflate(R.layout.toilet_list_item, parent, false);

@@ -15,9 +15,8 @@ import com.example.android.viewModel.RestroomsViewModel;
 
 public class MainActivity extends AppCompatActivity {
     private RestroomsViewModel _viewModel;
-    private RecyclerView _restroomRecyclerView;
-    private static final String RESTROOM_INTENT_FLAG = "restroomIntentFlag";
     private RestroomListAdapter _adapter;
+    private final String RESTROOM_INTENT_FLAG = "restroomIntentFlag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +26,9 @@ public class MainActivity extends AppCompatActivity {
         _adapter = new RestroomListAdapter(this);
         _viewModel = new RestroomsViewModel(_adapter);
 
-
-        _restroomRecyclerView = findViewById(R.id.restroomRecyclerView);
-        _restroomRecyclerView.setAdapter(_adapter);
-        _restroomRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerView restroomRecyclerView = findViewById(R.id.restroomRecyclerView);
+        restroomRecyclerView.setAdapter(_adapter);
+        restroomRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         final Runnable backgroundTask = () -> _viewModel.loadRestroomsData();
         new BasicAsyncTask(backgroundTask, _adapter::notifyDataSetChanged).execute();

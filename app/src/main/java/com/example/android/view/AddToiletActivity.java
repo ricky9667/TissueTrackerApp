@@ -21,11 +21,17 @@ public class AddToiletActivity extends AppCompatActivity {
     private Spinner _toiletIdSpinner;
     private EditText _toiletLocationEditText;
     private ToiletState toiletState = ToiletState.SUFFICIENT;
+    private String _restroomId;
+    private String _restroomLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_toilet_activity);
+
+        Intent intent = getIntent();
+        _restroomId = intent.getStringExtra("restroomId");
+        _restroomLocation = intent.getStringExtra("restroomLocation");
 
         ArrayList<String> arrayList = new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, arrayList);
@@ -39,17 +45,29 @@ public class AddToiletActivity extends AppCompatActivity {
         _toiletLocationEditText = findViewById(R.id.toiletLocationEditText);
     }
 
-    public void submitNewToilet(View view) {
-        Intent replyIntent = new Intent();
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
-        final String restroomId = "1"; // TODO: should replace with real restroomId from ToiletActivity
+        Intent intent = new Intent();
+        intent.putExtra("restroomId", _restroomId);
+        intent.putExtra("restroomLocation", _restroomLocation);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    public void submitNewToilet(View view) {
+        Intent intent = new Intent();
+
         final String toiletId = _toiletIdSpinner.getSelectedItem().toString();
         final String toiletLocation = _toiletLocationEditText.getText().toString();
 
-        final Runnable backgroundTask = () -> _viewModel.registerToilet(restroomId, toiletId, toiletLocation);
+        final Runnable backgroundTask = () -> _viewModel.registerToilet(_restroomId, toiletId, toiletLocation);
         new BasicAsyncTask(backgroundTask, null).execute();
 
-        setResult(RESULT_OK, replyIntent);
+        intent.putExtra("restroomId", _restroomId);
+        intent.putExtra("restroomLocation", _restroomLocation);
+        setResult(RESULT_OK, intent);
         finish();
     }
 

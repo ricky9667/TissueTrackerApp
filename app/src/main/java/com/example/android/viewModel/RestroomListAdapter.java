@@ -20,26 +20,22 @@ import com.example.android.R;
 import com.example.android.utils.BasicAsyncTask;
 import com.example.android.view.ToiletActivity;
 import com.example.android.model.Restroom;
-import com.example.android.service.Store;
 
 import java.util.ArrayList;
 
 public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapter.RestroomViewHolder> {
-    private final String RESTROOM_ID_EXTRA = "restroomIdExtra";
-    private final String RESTROOM_LOCATION_EXTRA = "restroomLocationExtra";
-
     private final LayoutInflater _inflater;
     private final ArrayList<Restroom> _restroomList = new ArrayList<>();
     private final ArrayList<String> _selectedRestroomList = new ArrayList<>();
+    private RestroomsViewModel _viewModel;
     private boolean _isEnabled = false;
 
+
     class RestroomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        private final Store _store = Store.getInstance(); // TODO: remove after all branches have been merge
         private final TextView _restroomListItemTitleView;
         private final TextView _restroomListItemContentView;
         private final ImageView _restroomListItemDeleteCheckBox;
         private final View _restroomListItemView;
-        private final RestroomsViewModel _viewModel;
         private final RestroomListAdapter _adapter;
 
         public RestroomViewHolder(View itemView, RestroomListAdapter adapter) {
@@ -48,8 +44,7 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
             _restroomListItemContentView = itemView.findViewById(R.id.restroomListItemContent);
             _restroomListItemDeleteCheckBox = itemView.findViewById(R.id.restroomDeleteCheckCircle);
             _restroomListItemView = itemView;
-            this._adapter = adapter;
-            _viewModel = new RestroomsViewModel(adapter);
+            _adapter = adapter;
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
@@ -69,8 +64,8 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
                 }
             } else {
                 Intent intent = new Intent(view.getContext(), ToiletActivity.class);
-                intent.putExtra(RESTROOM_ID_EXTRA, _restroomList.get(position).getId());
-                intent.putExtra(RESTROOM_LOCATION_EXTRA, _restroomList.get(position).getLocation());
+                intent.putExtra("restroomId", _restroomList.get(position).getId());
+                intent.putExtra("restroomLocation", _restroomList.get(position).getLocation());
                 view.getContext().startActivity(intent);
             }
         }
@@ -100,11 +95,10 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
                     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                         int id = item.getItemId();
                         if (id == R.id.delete) {
-                            for (int i = getItemCount() - 1; i >= 0; i--) {
-                                if (_selectedRestroomList.contains(String.valueOf(i))) {
-                                    int index = i;
-                                    String restroomId = _restroomList.get(index).getId();
-                                    _store.deleteRestroom(index);
+                            for (int index = getItemCount() - 1; index >= 0; index--) {
+                                if (_selectedRestroomList.contains(String.valueOf(index))) {
+                                    int deleteIndex = index;
+                                    String restroomId = _restroomList.get(deleteIndex).getId();
                                     final Runnable backgroundTask = () -> _viewModel.deleteRestroom(restroomId);
                                     new BasicAsyncTask(backgroundTask, _adapter::notifyDataSetChanged).execute();
                                 }
@@ -142,6 +136,10 @@ public class RestroomListAdapter extends RecyclerView.Adapter<RestroomListAdapte
 
     public RestroomListAdapter(Context context) {
         _inflater = LayoutInflater.from(context);
+    }
+
+    public void setViewModel(RestroomsViewModel viewModel) {
+        _viewModel = viewModel;
     }
 
     @Override
