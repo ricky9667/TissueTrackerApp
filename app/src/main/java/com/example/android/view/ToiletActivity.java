@@ -13,8 +13,12 @@ import com.example.android.utils.BasicAsyncTask;
 import com.example.android.viewModel.ToiletListAdapter;
 import com.example.android.viewModel.ToiletsViewModel;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class ToiletActivity extends AppCompatActivity {
     private ToiletsViewModel _viewModel;
+    private final Timer _timer = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,12 @@ public class ToiletActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        _timer.cancel();
+    }
+
     private void initActivityInformation() {
         Intent intent = getIntent();
         String restroomId = intent.getStringExtra("restroomId");
@@ -51,9 +61,14 @@ public class ToiletActivity extends AppCompatActivity {
 
             final Runnable backgroundTask = () -> _viewModel.loadToiletsData();
             new BasicAsyncTask(backgroundTask, adapter::notifyDataSetChanged).execute();
+
+            _timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    new BasicAsyncTask(backgroundTask, adapter::notifyDataSetChanged).execute();
+                }
+            }, 0, 5000);
         }
-
-
     }
 
     public void addNewToilet(View view) {
