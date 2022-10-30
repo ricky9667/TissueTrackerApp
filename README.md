@@ -11,7 +11,6 @@ An app for tracking tissue paper usages in toilets and restrooms.
 ### Android Course Final Project
 
 This is a final project for a university android course.
-Check out course website [here](https://myweb.ntut.edu.tw/~cliu/courses/ad/ad.htm)
 
 ### University Lab Project
 
